@@ -39,22 +39,20 @@ foreign key (idUsuario) references usuario (idUsuario) ,
 foreign key (idEstado) references Estados (idEstado) 
 );
 
-insert into Roles(Roll) values 
-('Persona Natural'),
-('Funcionario');
+DELIMITER //
 
-insert into usuario(Nombre,Apellido,Cedula,Correo,Contraseña,idroll) values
-('Stiven','Burbano','1233232232','lindo@gmaul.com','lindo123',1);
+	CREATE PROCEDURE AgregarUsuario(
+	IN	P_Nombre varchar(150),
+	IN P_Apellido varchar (150),
+	IN P_Cedula varchar (150),
+	IN P_Correo varchar(150),
+	IN P_Contraseña varchar(150),
+	IN P_idroll int
+	)
+	BEGIN
+		INSERT INTO usuario(Nombre, Apellido, Cedula, Correo, Contraseña, idroll)
+		VALUES (p_Nombre, P_Apellido, P_Cedula, P_Correo, P_Contraseña, P_idroll);
+	END //
 
-insert into PQRS (opcion)values 
-('Pregunta'),
-('Queja'),
-('Reclamo'),
-('Sugerencia');
+	DELIMITER ;
 
-insert into Estados (Estado) values 
-('revisado '),
-('por revisar');
-
-insert into Registros (Descripcion,FechaEnvio,idOpcion,idUsuario,idEstado) values 
-('porqueria de trabajo','28/04/2024',3,1,2);
