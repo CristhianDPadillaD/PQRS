@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class Conexion {
     String URL = "jdbc:mysql://localhost:3306/PQRS";
     String USUARIO = "root";
-    String CONTRASEÑA = "Neider2003";
+    String CONTRASEÑA = "admin";
     String driver = "com.mysql.cj.jdbc.Driver";
     java.sql.Connection cx; // Objeto Conexion para la conexión a la base de datos
 

@@ -20,10 +20,10 @@
                             <div class="card-body p-4 p-lg-5 text-black">
 
 
-                                <form id="loginForm" action="SvLogin" method="post">
+                                <form id="loginForm" action="SvAcceder" method="post">
 
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;" id="errorAlert">
-                                        Datos incorrectos o usuario no existente. Vuelva a intentarlo.
+                                        Correo o contraseña incorrecto. Vuelva a intentarlo.
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
 
@@ -49,8 +49,8 @@
 
 
                                     <div class="form-outline mb-4">
-                                        <input type="text" id="cedula" name="cedula" class="form-control form-control-lg" required/>
-                                        <label class="form-label" for="cedula">Cedula</label>
+                                        <input type="text" id="correo" name="correo" class="form-control form-control-lg" required/>
+                                        <label class="form-label" for="cedula">Correo</label>
                                     </div>
 
                                     <div class="form-outline mb-4">
@@ -86,22 +86,9 @@
             </div>
             <div class="modal-body">
                 <div id="usuario-details">
-                    <form id="registroForm" action="SvUsuario" method="post" class="row g-3 needs-validation">
-                        <!-- Campo de cédula -->
-                        <!-- Campo de cédula -->
-                        <div class="col-md-4 input-group">
-                            <label class="input-group-text" for="cedula">Número de cédula:</label>
-                            <input type="text" id="cedula" name="cedula" class="form-control" required pattern="[0-9]*" title="Ingresa solo números (sin espacios ni otros caracteres)" />
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">
-                                Por favor, ingresa solo números (sin espacios ni otros caracteres).
-                            </div>
-                        </div>
-
-
-                        <!-- Campo de nombre de usuario -->
+                    <form id="registroForm" action="SvAgregarUsuario" method="post" class="row g-3 needs-validation">
+        
+                                                <!-- Campo de nombre de usuario -->
                         <div class="col-md-4 input-group">
                             <label class="input-group-text" for="nombre">Nombre:</label>
                             <input type="text" id="nombre" name="nombre" class="form-control" required>
@@ -112,6 +99,43 @@
                                 Por favor, complete este campo.
                             </div>
                         </div>
+                                                                        <!-- Campo de apellido: de usuario -->
+                        <div class="col-md-4 input-group">
+                            <label class="input-group-text" for="nombre">Apellido:</label>
+                            <input type="text" id="apellido" name="apellido" class="form-control" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor, complete este campo.
+                            </div>
+                        </div>
+                        <!-- Campo de cédula -->
+                        <div class="col-md-4 input-group">
+                            <label class="input-group-text" for="cedula">Número de cédula:</label>
+                            <input type="text" id="cedula" name="cedula" class="form-control" required pattern="[0-9]*" title="Ingresa solo números (sin espacios ni otros caracteres)" />
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            
+                            <div class="invalid-feedback">
+                                Por favor, ingresa solo números (sin espacios ni otros caracteres).
+                            </div>
+                        </div>
+                                                <!-- Campo de correo de usuario -->
+                        <div class="col-md-4 input-group">
+                            <label class="input-group-text" for="nombre">Correo</label>
+                            <input type="text" id="correo" name="correo" class="form-control" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor, complete este campo.
+                            </div>
+                        </div>
+                                                
+
+
 
                         <!-- Campo de contraseña -->
                         <div class="col-md-4 input-group">
