@@ -13,5 +13,10 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        
+        <form action="SvAgregarUsuario" method="Get">
+            <input type ="submit" value =" Conectar">
+            
+        </form>
     </body>
 </html>

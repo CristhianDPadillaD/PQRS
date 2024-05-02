@@ -63,7 +63,7 @@
                                     </div>
 
                                     <p class="mb-5 pb-lg-2" style="color: #393f81;">No está registrado? <a href="#!" style="color: #0000FF;" data-bs-toggle="modal" data-bs-target="#exampleModal">Regístrate aquí</a></p>
-                                    <a href="#!" class="small text-muted">Terms of use.</a>
+                                    <a href="Login.jsp" class="small text-muted">Probar conexion.</a>
                                     <a href="#!" class="small text-muted">Privacy policy</a>
                                 </form>
 

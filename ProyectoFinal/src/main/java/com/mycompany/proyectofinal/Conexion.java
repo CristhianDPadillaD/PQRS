@@ -11,17 +11,17 @@ import java.sql.SQLException;
  *
  * @author ADMIN
  */
-public class Connection {
-    String URL = "jdbc:mysql://localhost:3306/Gestor";
+public class Conexion {
+    String URL = "jdbc:mysql://localhost:3306/PQRS";
     String USUARIO = "root";
     String CONTRASEÑA = "admin";
     String driver = "com.mysql.cj.jdbc.Driver";
-    java.sql.Connection cx; // Objeto Connection para la conexión a la base de datos
+    java.sql.Connection cx; // Objeto Conexion para la conexión a la base de datos
 
     /**
      * Constructor de la clase.
      */
-    public Connection() {
+    public Conexion() {
     
 }
 
