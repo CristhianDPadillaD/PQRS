@@ -18,6 +18,11 @@ idroll int,
 foreign key (idroll) references Roles (idroll) 
 );
 
+INSERT INTO usuario(Nombre, Apellido, Cedula, Correo, Contraseña, idroll) VALUES 
+('Cristhian', 'Padilla', '105108', 'dctm', 'admin', 2);
+
+
+    
 create table Estados (
 idEstado INT AUTO_INCREMENT PRIMARY KEY,
 Estado VARCHAR(50)
@@ -38,9 +43,8 @@ foreign key (idOpcion) references PQRS (idOpcion) ,
 foreign key (idUsuario) references usuario (idUsuario) ,
 foreign key (idEstado) references Estados (idEstado) 
 );
-INSERT INTO Roles(Roll) VALUES
-	('usuario'),
-    ('SuperUsuario');
+INSERT INTO Roles(Roll) VALUES ("usuario"), ("SuperUsuario");
+    
 DELIMITER //
 
 	CREATE PROCEDURE AgregarUsuario(
