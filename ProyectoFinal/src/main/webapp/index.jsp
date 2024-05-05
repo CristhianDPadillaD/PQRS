@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <%@include file= "templates/header.jsp" %>
 
+
 <section class="vh-100" style="background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);"width="100%">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">

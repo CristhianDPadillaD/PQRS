@@ -1,17 +1,29 @@
 <%-- 
-    Document   : Login
-    Created on : 1/05/2024, 8:48:09 p. m.
-    Author     : ADMIN
+    Document   : Estado
+    Created on : 4/05/2024, 9:55:12 p. m.
+    Author     : Lenovo
 --%>
-<%@include file= "templates/header.jsp" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" href="templates/Style2.css">
-    <body id="page-top">
-
-        <!-- Navigation-->
+    <head>
+        <link rel="stylesheet" href="templates/Style2.css">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Business Frontpage - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container px-4 px-lg-5">
                 <a class="navbar-brand" href="#page-top">PQRS</a>
@@ -25,65 +37,39 @@
                 </div>
             </div>
         </nav> 
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Creative - Start Bootstrap Theme</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/" />
-        <!-- Bootstrap Icons-->
-        <link href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fbookstore.cl%2Fblog%2Fpost%2Fcaracteristicas-principales-de-una-oficina-moderna-cual-te-hace-falta&psig=AOvVaw3NqiBEDtpGSHkKShteXkN9&ust=1714950963456000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPiUuNKP9YUDFQAAAAAdAAAAABAE" rel="stylesheet" />
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/"css />
-        <!-- SimpleLightbox plugin CSS-->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="templates/Style2.css" rel="stylesheet" />
-    </head>
-    
-    <body id="page-top">
-
-        <!-- Masthead-->
-        
-        <header class="masthead">
-    <div class="container px-4 px-lg-5 h-100">
-                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                    <div class="col-lg-8 align-self-end">
-                        <h1 class="text-white font-weight-bold">Sistema de PQRS</h1>
-                        <hr class="divider" />
-                    </div>
-                    <div class="col-lg-8 align-self-baseline">
-                        
-                        <p class="text-white-75 mb-5">Aquí puedes enviar tus Peticiones, Quejas, Reclamos y Sugerencias de forma rápida, obtener respuestas y soluciones eficientes, y ayudarnos a mejorar con tu feedback.</p>
-                        <p class="text-white-75 mb-5">Tu opinión es importante. ¡Gracias por comunicarte con nosotros!</p>
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-5">
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="text-center my-5">
+                            <h1 class="display-5 fw-bolder text-white mb-2">Estado de tu PQRS</h1>
+                            <p class="lead text-white-50 mb-4">Mira el estado en el que se encuentra tu PQRS</p>
+                            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                                 <button class="btn btn-primary btn-lg px-4 me-sm-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar PQRS</button>
+                                <a class="btn btn-outline-light btn-lg px-4" href="#gugugugug">Eliminar PQRS</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </header>
-
-        <!-- Contact-->
+        <br>
         <section class="page-section" id="contact">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6 text-center">
-                        <h2 class="mt-0">Realiza tu PQRS</h2>
+                        <h2 class="mt-0">Mira el estado de tu PQRS</h2>
                         <hr class="divider" />
                         <p class="text-muted mb-5">Enviar tus Peticiones, Quejas, Reclamos y Sugerencias de forma rápida.</p>
                         <p class="text-muted mb-5">Obtener respuestas y soluciones eficientes.</p>
-                       
+
                     </div>
                 </div>
+
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                     <div class="col-lg-6">
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
+
                         <!-- to get an API token!-->
                         <form id="contactForm" data-sb-form-api-token="API_TOKEN">
                             <!-- Name input-->
@@ -98,9 +84,9 @@
                                     <option value="opcion1">Opción 1</option>
                                     <option value="opcion2">Opción 2</option>
                                     <option value="opcion3">Opción 3</option>
-                                   
+
                                 </select>
-                               
+
                                 <div class="invalid-feedback" data-sb-feedback="opcion:required">Debes seleccionar una opción.</div>
                             </div>
                             <!-- Email address input-->
@@ -113,7 +99,7 @@
                             <!-- Phone number input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                                <label for="phone">Cedula</label>
+                                <label for="phone">Estado</label>
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
                             </div>
                             <!-- Message input-->
@@ -122,35 +108,44 @@
                                 <label for="message">Descripcion</label>
                                 <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
                             </div>
-                            <div>
-                                <label for="formFileLg" class="form-label">Subir un archivo PDF</label>
-                                <input class="form-control form-control-lg" id="formFileLg" type="file">
-                            </div>
-                            <br>
-                           <div class="d-grid"> <form action="SvAgregarUsuario" method="Get">
-                                    <input type ="submit" value =" Enviar">
-                                    </form></div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- Footer-->
-        <footer class="bg-light py-5">
-            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2023 - Company Name</div></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- SimpleLightbox plugin JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-    </body>
-    
+            
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Realiza tu PQRS</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Aquí va tu tabla -->
+                            <table class="table">
+                                <!-- Contenido de tu tabla aquí -->
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <!-- Agrega aquí tu botón de envío de formulario dentro del modal si es necesario -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <script src="ruta/a/tu/jquery.min.js"></script>
+    <script src="ruta/a/tu/bootstrap.bundle.min.js"></script>
+    <script>
+    // Script para activar el modal al hacer clic en el botón "Editar PQRS" sin jQuery
+    document.addEventListener('DOMContentLoaded', function() {
+        var editarPQRSButton = document.querySelector('.btn-editar-pqrs');
+        editarPQRSButton.addEventListener('click', function() {
+            var modal = document.getElementById('exampleModal');
+            var modalInstance = new bootstrap.Modal(modal);
+            modalInstance.show();
+        });
+    });
+</script>
+
     
 </html>
-

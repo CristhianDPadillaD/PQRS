@@ -1,7 +1,7 @@
 <%-- 
-    Document   : SuperUsuario
-    Created on : 2/05/2024, 9:56:39 p. m.
-    Author     : ADMIN
+    Document   : Usuarios
+    Created on : 4/05/2024, 10:57:45 p. m.
+    Author     : Lenovo
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,8 +42,8 @@
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-6">
                         <div class="text-center my-5">
-                            <h1 class="display-5 fw-bolder text-white mb-2">Registros de PQRS</h1>
-                            <p class="lead text-white-50 mb-4">Registros de todas las PQRS Ingresadas </p>
+                            <h1 class="display-5 fw-bolder text-white mb-2">Usuarios Registrados</h1>
+                            <p class="lead text-white-50 mb-4">Usuarios activos presentes </p>
                             <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
                             </div>
                         </div>
@@ -57,23 +57,25 @@
         <table class="table table-dark table-borderless">
             <thead>
                 <tr>
-                    <th scope="col">Usuario</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
                     <th scope="col">Correo</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Fecha envio</th>
-                    <th scope="col">Estados</th>
+                    <th scope="col">Roll</th>
+                    <th scope="col">Cedula</th>
+                    <th scope="col">Opcion</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <th>marcos</th>
+                    <td>alonzo</td>
                     <td>Mark@gmail.com</td>
-                    <td>Pregunta</td>
-                    <td>12/12/12</td>
+                    <td>usuario</td>
+                    <td>124332424</td>
                     <td> 
-                        <a href="#" class="btn btn-primary" target="_blank"><i class="fa-solid fa-eye"></i> Ver </a>
-                        <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="" <i class="fa-solid fa-trash"></i> Eliminar</a>
-                        <a href="#" class="btn btn-primary" target="_blank"><i class="fa-solid fa-eye"></i> Responder</a>
+                        
+                        <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="" <i class="fa-solid fa-trash"></i> Cambiar roll </a>
+                       
                     </td>
                 </tr>
 
