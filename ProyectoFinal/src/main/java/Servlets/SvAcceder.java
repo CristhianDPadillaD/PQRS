@@ -53,14 +53,19 @@
                 // Las credenciales son válidas
                 String nombreUsuario = resultadoAutenticacion[0];
                 String rol = resultadoAutenticacion[1];
+                String cedula = resultadoAutenticacion[2];
                 request.getSession().setAttribute("usuario", nombreUsuario);
                 request.getSession().setAttribute("rol", rol);
                 if (rol.equals("Superusuario")) {
                     // Si el usuario es un superusuario, redireccionar a la página de superusuario
                     response.sendRedirect("SuperUsuario.jsp");
                 } else {
+                    request.getSession().setAttribute("usuario", nombreUsuario);
+                request.getSession().setAttribute("correo", Correo);
+                
+                    request.getSession().setAttribute("cedula", cedula);
                     // Si el usuario es un usuario regular, redireccionar a la página de usuario regular
-                    response.sendRedirect("Login.jsp");
+                    response.sendRedirect("Formulario.jsp");
                 }
             } else {
                 // Las credenciales no son válidas, redireccionar a "index.jsp" con un parámetro de alerta

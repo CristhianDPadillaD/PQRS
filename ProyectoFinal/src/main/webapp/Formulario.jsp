@@ -1,11 +1,18 @@
 <%-- 
-    Document   : Login
+    Document   : Formulario
     Created on : 1/05/2024, 8:48:09 p. m.
     Author     : ADMIN
 --%>
 <%@include file= "templates/header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+ <% 
+    // Obtener el nombre de usuario y el rol de la sesión
+    String nombreUsuario = (String) session.getAttribute("usuario");
+    String correo = (String) session.getAttribute("correo");
+    String cedula = (String) session.getAttribute("cedula");
+    %>
+    
 <!DOCTYPE html>
 <html lang="en">
     <link rel="stylesheet" href="templates/Style2.css">
@@ -88,16 +95,17 @@
                         <form id="contactForm" data-sb-form-api-token="API_TOKEN">
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" value=" <%= nombreUsuario%>" />
                                 <label for="name">Nombre Completo</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Complete este espacio.</div>
                             </div>
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="opcion" data-sb-validations="required">
-                                    <option value="">Selecciona una opción</option>
-                                    <option value="opcion1">Opción 1</option>
-                                    <option value="opcion2">Opción 2</option>
-                                    <option value="opcion3">Opción 3</option>
+                                    <option value="" hidden>Selecciona una opción</option>
+                                    <option value="Pregunta">Pregunta</option>
+                                    <option value="Queja">Queja</option>
+                                    <option value="Reclamo">Reclamo</option>
+                                      <option value="Sugerencias">Sugerencias</option>
                                    
                                 </select>
                                
@@ -105,14 +113,14 @@
                             </div>
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" value="<%=correo%>" />
                                 <label for="email">Correo Electronico</label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                             </div>
                             <!-- Phone number input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required"  value=" <%=cedula%>"/>
                                 <label for="phone">Cedula</label>
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
                             </div>
@@ -124,7 +132,7 @@
                             </div>
                             <div>
                                 <label for="formFileLg" class="form-label">Subir un archivo PDF</label>
-                                <input class="form-control form-control-lg" id="formFileLg" type="file">
+                                <input class="form-control form-control-lg" id="formFileLg" type="file" accept=".pdf">
                             </div>
                             <br>
                            <div class="d-grid"> <form action="SvAgregarUsuario" method="Get">
@@ -149,6 +157,21 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        
+        <script>
+            document.getElementById('contactForm').addEventListener('submit', function(event) {
+    var message = document.getElementById('message').value;
+    var fileInput = document.getElementById('formFileLg');
+
+    // Verificar si al menos uno de los campos tiene valor
+    if (!message && !fileInput.files.length) {
+        alert('Debes proporcionar al menos la descripción o el archivo PDF.');
+        event.preventDefault(); // Evitar el envío del formulario si no se proporciona ninguno
+    }
+});
+
+        </script>
+        
     </body>
     
     

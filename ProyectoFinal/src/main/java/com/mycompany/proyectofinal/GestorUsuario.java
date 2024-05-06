@@ -44,42 +44,44 @@ public class GestorUsuario {
         
         
     }
-      public String[] loginUsuario(String correo, String contrasenia) throws SQLException {
-        String[] resultado = new String[2]; // Array para almacenar el nombre de usuario y el rol
-           Connection conexion = con.Conectar();
-        String consulta = "SELECT Nombre, idroll FROM usuario WHERE Correo = ? AND Contraseña = ?";
-        PreparedStatement statement = conexion.prepareStatement(consulta);
-        statement.setString(1, correo);
-        statement.setString(2, contrasenia);
-        ResultSet resultSet = statement.executeQuery();
+    
+     public String[] loginUsuario(String correo, String contrasenia) throws SQLException {
+    String[] resultado = new String[3]; // Array para almacenar el nombre de usuario, el rol y la cédula
+    Connection conexion = con.Conectar();
+    String consulta = "SELECT Nombre, idroll, Cedula FROM usuario WHERE Correo = ? AND Contraseña = ?";
+    PreparedStatement statement = conexion.prepareStatement(consulta);
+    statement.setString(1, correo);
+    statement.setString(2, contrasenia);
+    ResultSet resultSet = statement.executeQuery();
+    
+    if (resultSet.next()) {
+        // Las credenciales coinciden, usuario autenticado
+        resultado[0] = resultSet.getString("Nombre"); // Obtener el nombre de usuario
+        resultado[2] = resultSet.getString("Cedula"); // Obtener la cédula del usuario
         
-        if (resultSet.next()) {
-            // Las credenciales coinciden, usuario autenticado
-            resultado[0] = resultSet.getString("Nombre"); // Obtener el nombre de usuario
-            
-            // Obtener el id del rol del usuario
-            int idRol = resultSet.getInt("idroll");
-            
-            // Determinar si el usuario es un superusuario o no
-            if (idRol == 2) {
-                resultado[1] = "Superusuario"; // Si el id del rol es 2, es un superusuario
-            } else {
-                resultado[1] = "Usuario"; // De lo contrario, es un usuario regular
-            }
-            
-            resultSet.close();
-            statement.close();
-            
-            return resultado; // Devolver el nombre de usuario y su rol
+        // Obtener el id del rol del usuario
+        int idRol = resultSet.getInt("idroll");
+        
+        // Determinar si el usuario es un superusuario o no
+        if (idRol == 2) {
+            resultado[1] = "Superusuario"; // Si el id del rol es 2, es un superusuario
+        } else {
+            resultado[1] = "Usuario"; // De lo contrario, es un usuario regular
         }
         
         resultSet.close();
         statement.close();
-
-        // Si no se encontró ninguna coincidencia o las credenciales son incorrectas, el inicio de sesión falla
-        return null;
+        
+        return resultado; // Devolver el nombre de usuario, el rol y la cédula
     }
+    
+    resultSet.close();
+    statement.close();
 
-    // Otros métodos de la clase...
+    // Si no se encontró ninguna coincidencia o las credenciales son incorrectas, el inicio de sesión falla
+    return null;
 }
+     
+}
+
 

@@ -126,7 +126,7 @@
                                                 <!-- Campo de correo de usuario -->
                         <div class="col-md-4 input-group">
                             <label class="input-group-text" for="nombre">Correo</label>
-                            <input type="text" id="correo" name="correo" class="form-control" required>
+                            <input type="email" id="correo" name="correo" class="form-control" required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
