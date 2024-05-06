@@ -92,35 +92,37 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <form id="contactForm" data-sb-form-api-token="API_TOKEN"  action="SvAgregarRegistro" method="Get">
+                               <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;" id="errorAlert">
+                                      Debes proporcionar al menos la descripción o el archivo PDF.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" value=" <%= nombreUsuario%>" />
+                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." required value="<%=nombreUsuario%>" />
                                 <label for="name">Nombre Completo</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Complete este espacio.</div>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="opcion" data-sb-validations="required">
+                                <select class="form-select" id="opcion" required>
                                     <option value="" hidden>Selecciona una opción</option>
                                     <option value="Pregunta">Pregunta</option>
                                     <option value="Queja">Queja</option>
                                     <option value="Reclamo">Reclamo</option>
                                       <option value="Sugerencias">Sugerencias</option>
-                                   
                                 </select>
-                               
                                 <div class="invalid-feedback" data-sb-feedback="opcion:required">Debes seleccionar una opción.</div>
                             </div>
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" value="<%=correo%>" />
+                                <input class="form-control" id="email" type="email" placeholder="name@example.com" required value="<%=correo%>" />
                                 <label for="email">Correo Electronico</label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                             </div>
                             <!-- Phone number input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required"  value=" <%=cedula%>"/>
+                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" required  value="<%=cedula%>"/>
                                 <label for="phone">Cedula</label>
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
                             </div>
@@ -135,7 +137,7 @@
                                 <input class="form-control form-control-lg" id="formFileLg" type="file" accept=".pdf">
                             </div>
                             <br>
-                           <div class="d-grid"> <form action="SvAgregarUsuario" method="Get">
+                           <div class="d-grid">
                                     <input type ="submit" value =" Enviar">
                                     </form></div>
                     </div>
@@ -158,20 +160,56 @@
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
         
-        <script>
-            document.getElementById('contactForm').addEventListener('submit', function(event) {
-    var message = document.getElementById('message').value;
+<script>
+// Variable de control para verificar si el formulario debe enviarse
+var enviarFormulario = false;
+
+// Agregar un event listener al formulario
+document.getElementById('contactForm').addEventListener('submit', function(event) {
+    var message = document.getElementById('message').value.trim(); // Obtener el valor del campo y eliminar espacios en blanco al inicio y al final
     var fileInput = document.getElementById('formFileLg');
+    const errorAlert = document.getElementById('errorAlert');
+    const messageField = document.getElementById('message');
+    const messageFeedback = document.querySelector('[data-sb-feedback="message:required"]');
+
+    // Verificar si el campo de descripción está vacío
+    if (!message && fileInput.files.length === 0) {
+
+        event.preventDefault(); // Evitar el envío del formulario
+        enviarFormulario = false; // No permitir el envío del formulario
+    } else {
+        messageField.classList.remove('is-invalid'); // Quitar la clase de campo inválido si está presente
+        messageFeedback.style.display = 'none'; // Ocultar el mensaje de error si está visible
+        enviarFormulario = true; // Permitir el envío del formulario
+    }
 
     // Verificar si al menos uno de los campos tiene valor
     if (!message && !fileInput.files.length) {
-        alert('Debes proporcionar al menos la descripción o el archivo PDF.');
+        errorAlert.style.display = 'block';
         event.preventDefault(); // Evitar el envío del formulario si no se proporciona ninguno
+        enviarFormulario = false; // No permitir el envío del formulario si no se proporciona ninguno
+    } else {
+        errorAlert.style.display = 'none'; // Ocultar el mensaje de error si al menos uno de los campos tiene valor
     }
 });
 
-        </script>
-        
+// Agregar un event listener al botón cerrar del alert
+document.querySelector('#errorAlert .btn-close').addEventListener('click', function() {
+    // Ocultar el alert
+    document.getElementById('errorAlert').style.display = 'none';
+
+    // Actualizar el estado de la variable
+    enviarFormulario = false;
+});
+
+// Agregar un event listener al campo del PDF para activar el envío del formulario si está lleno
+document.getElementById('formFileLg').addEventListener('change', function() {
+    if (this.files.length > 0) {
+        enviarFormulario = true; // Permitir el envío del formulario si el campo del PDF está lleno
+    }
+});
+</script>
+
     </body>
     
     
