@@ -69,83 +69,56 @@
 
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                     <div class="col-lg-6">
-
-                        <!-- to get an API token!-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <!-- Name input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="name">Nombre Completo</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">Complete este espacio.</div>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <select class="form-select" id="opcion" data-sb-validations="required">
-                                    <option value="">Selecciona una opción</option>
-                                    <option value="opcion1">Opción 1</option>
-                                    <option value="opcion2">Opción 2</option>
-                                    <option value="opcion3">Opción 3</option>
-
-                                </select>
-
-                                <div class="invalid-feedback" data-sb-feedback="opcion:required">Debes seleccionar una opción.</div>
-                            </div>
-                            <!-- Email address input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                                <label for="email">Correo Electronico</label>
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                            </div>
-                            <!-- Phone number input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                                <label for="phone">Estado</label>
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                            </div>
-                            <!-- Message input-->
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                                <label for="message">Descripcion</label>
-                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                            </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Realiza tu PQRS</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Aquí va tu tabla -->
-                            <table class="table">
-                                <!-- Contenido de tu tabla aquí -->
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <!-- Agrega aquí tu botón de envío de formulario dentro del modal si es necesario -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <br>
+                <center> <h1>Registros de PQRS</h1></center>
+                <br>
+                <table class="table table-dark table-borderless">
+                    <thead>
+                        <tr>
 
-    <script src="ruta/a/tu/jquery.min.js"></script>
-    <script src="ruta/a/tu/bootstrap.bundle.min.js"></script>
-    <script>
-    // Script para activar el modal al hacer clic en el botón "Editar PQRS" sin jQuery
-    document.addEventListener('DOMContentLoaded', function() {
-        var editarPQRSButton = document.querySelector('.btn-editar-pqrs');
-        editarPQRSButton.addEventListener('click', function() {
-            var modal = document.getElementById('exampleModal');
-            var modalInstance = new bootstrap.Modal(modal);
-            modalInstance.show();
-        });
-    });
-</script>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Peticion</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Descripcion</th>
+                            <th scope="col">Archivo</th>
+                            <th scope="col">Opcion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
 
-    
-</html>
+                            <td>Mark@gmail.com</td>
+                            <td>Pregunta</td>
+                            <td>Sin revisar</td>
+                            <td>holis</td>
+                            <td>124332424</td>
+                            <td>pdf</td>
+                            <td> 
+
+                                <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="" <i class="fa-solid fa-trash"></i> Eliminar </a>
+                                <a href="#" class="btn btn-primary" target="_blank"><i class="fa-solid fa-eye"></i> Editar</a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <script src="ruta/a/tu/jquery.min.js"></script>
+                <script src="ruta/a/tu/bootstrap.bundle.min.js"></script>
+                <script>
+                // Script para activar el modal al hacer clic en el botón "Editar PQRS" sin jQuery
+                document.addEventListener('DOMContentLoaded', function() {
+                    var editarPQRSButton = document.querySelector('.btn-editar-pqrs');
+                    editarPQRSButton.addEventListener('click', function() {
+                        var modal = document.getElementById('exampleModal');
+                        var modalInstance = new bootstrap.Modal(modal);
+                        modalInstance.show();
+                    });
+                });
+                </script>
+
+
+            </html>
