@@ -5,10 +5,8 @@
 package Servlets;
 
 import com.mycompany.proyectofinal.Conexion;
-import com.mycompany.proyectofinal.GestorUsuario;
-import java.io.File;
+import com.mycompany.proyectofinal.GestorRegistros;
 import java.io.IOException;
-import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.Date;
@@ -70,7 +68,7 @@ public class SvAgregarRegistro extends HttpServlet {
     Connection conexion = con.Conectar();
     
     // Instanciar el gestor de PQRS
-    GestorUsuario gestor = new GestorUsuario();
+    GestorRegistros gestor = new GestorRegistros();
     
        out.println(fileName);
          out.println(idOpcion);

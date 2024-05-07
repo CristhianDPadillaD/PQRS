@@ -4,9 +4,18 @@
     Author     : Lenovo
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="com.mycompany.proyectofinal.Usuario"%>
+<%@page import="com.mycompany.proyectofinal.Usuario"%>
+<%@page import="com.mycompany.proyectofinal.GestorUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
+    <% 
+    GestorUsuario gestoUsuario = new GestorUsuario();
+    List<Usuario> user = gestoUsuario.listarUsuarios();
+    
+    %>
     <head>
         <link rel="stylesheet" href="templates/Style2.css">
         <meta charset="utf-8" />
@@ -66,17 +75,23 @@
                 </tr>
             </thead>
             <tbody>
+                
                 <tr>
-                    <th>marcos</th>
-                    <td>alonzo</td>
-                    <td>Mark@gmail.com</td>
-                    <td>usuario</td>
-                    <td>124332424</td>
+                        <% // Iteramos sobre la lista de tutoriales y mostramos los detalles de cada tutorial en una tabla HTML
+                                for (Usuario usuario :user) {
+                            %> 
+                <tr>
+                    <th><%=usuario.getNombre()%></th>
+                    <th><%=usuario.getApellido()%></th>
+                    <td><%=usuario.getCorreo()%></td>
+                    <td><%=usuario.getRoll()%></td>
+                    <td><%=usuario.getCedula()%></td>
                     <td> 
-                        
                         <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="" <i class="fa-solid fa-trash"></i> Cambiar roll </a>
                        
                     </td>
+                    </tr>
+                                          <% } %>
                 </tr>
 
             </tbody>

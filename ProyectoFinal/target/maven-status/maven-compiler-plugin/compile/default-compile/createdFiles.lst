@@ -2,7 +2,9 @@ Servlets\SvAgregarUsuario.class
 Servlets\SvAcceder.class
 com\mycompany\proyectofinal\resources\JakartaEE8Resource.class
 com\mycompany\proyectofinal\GestorUsuario.class
+com\mycompany\proyectofinal\Registros.class
 com\mycompany\proyectofinal\Conexion.class
+com\mycompany\proyectofinal\GestorRegistros.class
 Servlets\SvAgregarRegistro.class
 com\mycompany\proyectofinal\JakartaRestConfiguration.class
 com\mycompany\proyectofinal\Usuario.class

@@ -10,6 +10,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -46,28 +48,6 @@ public class GestorUsuario {
         
     }
 
-public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idOpcion, int idUsuario, int idEstado, Connection conectar) {
-        if (conectar != null) {
-            try {
-                // Llamar al procedimiento almacenado para agregar el PQRS
-                CallableStatement stmt = conectar.prepareCall("{call AgregarRegistro(?, ?, ?, ?, ?, ?)}");
-                stmt.setString(1, descripcion);
-                stmt.setString(2, pdf);
-                stmt.setDate(3, fechaEnvio);
-                stmt.setInt(4, idOpcion);
-                stmt.setInt(5, idUsuario);
-                stmt.setInt(6, idEstado);
-                
-                stmt.execute();
-                conectar.close();
-                System.out.println("PQRS agregado con éxito");
-            } catch (SQLException e) {
-                System.out.println("Error al agregar el PQRS: " + e.getMessage());
-            }
-        } else {
-            System.out.println("No se pudo establecer una conexión a la base de datos.");
-        }
-    }
 
 
     
@@ -107,6 +87,58 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
 
     // Si no se encontró ninguna coincidencia o las credenciales son incorrectas, el inicio de sesión falla
     return null;
+}
+      public String buscarRoll(int idRoll) throws SQLException {
+    String roll = null;
+
+    // Establecer la conexión a la base de datos
+    Conexion conexion = new Conexion();
+    Connection connection = conexion.Conectar();
+
+  
+    String sql = "SELECT Roll FROM Roles WHERE idroll = ?";
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+     
+        statement.setInt(1, idRoll);
+
+        // Ejecutar la consulta
+        try (ResultSet resultSet = statement.executeQuery()) {
+            // Si se encuentra una fila, obtener el nombre de la opción
+            if (resultSet.next()) {
+                
+                roll = resultSet.getString("Roll");
+            } else {
+                
+                System.out.println("No se encontró el roll con el ID proporcionado: " + idRoll);
+            }
+        }
+    }
+
+    return roll;
+}
+      
+       public List<Usuario> listarUsuarios() {
+    List<Usuario> usuarios = new ArrayList<>();
+    try (Connection conexion = new Conexion().Conectar()) {
+        String sql = "SELECT * FROM usuario";
+        try (PreparedStatement statement = conexion.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                Usuario user = new Usuario();
+                user.setNombre(resultSet.getString("Nombre"));
+                user.setApellido(resultSet.getString("Apellido"));
+                user.setCedula(resultSet.getString("Cedula"));
+                user.setCorreo(resultSet.getString("Correo"));
+                user.setContraseña(resultSet.getString("Contraseña"));
+                user.setIdroll(resultSet.getInt("idroll"));
+                usuarios.add(user);
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error al listar los usuarios: " + ex.getMessage());
+    }
+    return usuarios;
 }
      
 }

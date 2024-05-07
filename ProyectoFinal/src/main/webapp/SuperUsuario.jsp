@@ -4,9 +4,16 @@
     Author     : ADMIN
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="com.mycompany.proyectofinal.Registros"%>
+<%@page import="com.mycompany.proyectofinal.GestorRegistros"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
+    <%
+        GestorRegistros gestorRegistro = new GestorRegistros();
+        List<Registros> registro = gestorRegistro.listarRegistros();
+    %>
     <head>
         <link rel="stylesheet" href="templates/Style2.css">
         <meta charset="utf-8" />

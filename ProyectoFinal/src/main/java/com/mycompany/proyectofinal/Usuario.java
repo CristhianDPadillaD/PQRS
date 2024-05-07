@@ -4,6 +4,8 @@
  */
 package com.mycompany.proyectofinal;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author Lenovo
@@ -15,15 +17,6 @@ public class Usuario {
     String Correo;
     String Contraseña;
     int idroll;
-
-    public Usuario(String Nombre, String Apellido, String Cedula, String Correo, String Contraseña, int idroll) {
-        this.Nombre = Nombre;
-        this.Apellido = Apellido;
-        this.Cedula = Cedula;
-        this.Correo = Correo;
-        this.Contraseña = Contraseña;
-        this.idroll = idroll;
-    }
 
     public String getNombre() {
         return Nombre;
@@ -73,5 +66,19 @@ public class Usuario {
         this.idroll = idroll;
     }
     
-    
+     public String getRoll (){
+          String roll = "Roll no encontrado"; // Valor por defecto
+        
+        // Crear una instancia de GestorCategorias
+        GestorUsuario registro = new GestorUsuario();
+        
+        try {
+            // Llamar al método buscarCategoria de la instancia de GestorCategorias para obtener el nombre de la categoría
+            roll = registro.buscarRoll(this.idroll);
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el nombre del roll: " + e.getMessage());
+        }
+        
+        return roll;
+    }
 }
