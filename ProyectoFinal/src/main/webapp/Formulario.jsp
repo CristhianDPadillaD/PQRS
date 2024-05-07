@@ -27,7 +27,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link" href="prueba.jsp">Enviar PQRS</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Estado.jsp">Estado PQRS</a></li>
+                        <li class="nav-item"><a class="nav-link"  href="Estado.jsp?id=<%=id%>">Estado PQRS</a></li>
                         <li class="nav-item"><a class="nav-link" href="index.jsp">Salir</a></li>
                     </ul>
                 </div>
@@ -98,6 +98,7 @@
                                 Debes proporcionar al menos la descripción o el archivo PDF.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
+                                 <input type = "numb"hidden value="<%= id%>" name="id">
                             <!-- Name input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="name" type="text" placeholder="Enter your name..." required value="<%= nombreUsuario%>" />
@@ -105,9 +106,9 @@
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Complete este espacio.</div>
                             </div>
                                 
-                                <input hidden value="<%= id%>" name="id">
+                           
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="opcion" name="opciones" required>
+                                <select class="form-select" id="opcion" name="opciones" required >
                                     <option hidden>Selecciona una opción</option>
                                     <option value="1">Pregunta</option>
                                     <option value="2">Queja</option>

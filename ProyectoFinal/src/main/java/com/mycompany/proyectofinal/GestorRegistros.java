@@ -65,12 +65,66 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
                 System.out.println("No se encontró una opción con el ID proporcionado: " + idOpcion);
             }
         }
-    }
+    }   
 
     return nombreOpcion;
 }
     
- public List<Registros> listarRegistros() {
+       public String buscarCorreo(int idUsuario) throws SQLException {
+    String correo = null;
+
+    // Establecer la conexión a la base de datos
+    Conexion conexion = new Conexion();
+    Connection connection = conexion.Conectar();
+
+    // Consulta SQL para obtener el nombre de la opción por su idOpcion
+    String sql = "SELECT Correo FROM usuario WHERE idUsuario = ?";
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        // Establecer el idOpcion como parámetro de la consulta
+        statement.setInt(1, idUsuario);
+
+        // Ejecutar la consulta
+        try (ResultSet resultSet = statement.executeQuery()) {
+            // Si se encuentra una fila, obtener el nombre de la opción
+            if (resultSet.next()) {
+                correo = resultSet.getString("Correo");
+            } else {
+                System.out.println("No se encontre el correocon el ID proporcionado: " + idUsuario);
+            }
+        }
+    }   
+
+    return correo;
+}
+         public String buscarEstado(int idEstado) throws SQLException {
+    String estado = null;
+
+    // Establecer la conexión a la base de datos
+    Conexion conexion = new Conexion();
+    Connection connection = conexion.Conectar();
+
+    // Consulta SQL para obtener el nombre de la opción por su idOpcion
+    String sql = "SELECT Estado FROM Estados WHERE idEstado = ?";
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        // Establecer el idOpcion como parámetro de la consulta
+        statement.setInt(1, idEstado);
+
+        // Ejecutar la consulta
+        try (ResultSet resultSet = statement.executeQuery()) {
+            // Si se encuentra una fila, obtener el nombre de la opción
+            if (resultSet.next()) {
+                estado = resultSet.getString("Estado");
+            } else {
+                System.out.println("No se encontro el estado con el ID proporcionado: " + idEstado);
+            }
+        }
+    }   
+
+    return estado;
+}
+ public List<Registros> listarTodosRegistros() {
     List<Registros> registros = new ArrayList<>();
     try (Connection conexion = new Conexion().Conectar()) {
         String sql = "SELECT * FROM Registros";
@@ -92,6 +146,31 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
     }
     return registros;
 }
+ public List<Registros> listarRegistrosUsuario(int idUsuario) {
+    List<Registros> registros = new ArrayList<>();
+    try (Connection conexion = new Conexion().Conectar()) {
+        String sql = "SELECT * FROM Registros WHERE idUsuario = ?";
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setInt(1, idUsuario);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Registros registro = new Registros();
+                    registro.setDescripcion(resultSet.getString("Descripcion"));
+                    registro.setPdf(resultSet.getString("Pdf"));
+                    registro.setFechaEnvio(resultSet.getDate("FechaEnvio"));
+                    registro.setIdOpcion(resultSet.getInt("idOpcion"));
+                    registro.setIdUsuario(resultSet.getInt("idUsuario"));
+                    registro.setIdEstado(resultSet.getInt("idEstado"));
+                    registros.add(registro);
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error al listar los registros del usuario " + idUsuario + ": " + ex.getMessage());
+    }
+    return registros;
+}
+
 
 
 }
