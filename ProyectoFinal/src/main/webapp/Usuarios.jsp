@@ -84,7 +84,6 @@
                     <th><%=usuario.getNombre()%></th>
                     <th><%=usuario.getApellido()%></th>
                     <td><%=usuario.getCorreo()%></td>
-                    <td><%=usuario.getRoll()%></td>
                     <td><%=usuario.getCedula()%></td>
                     <td> 
                         <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="" <i class="fa-solid fa-trash"></i> Cambiar roll </a>
