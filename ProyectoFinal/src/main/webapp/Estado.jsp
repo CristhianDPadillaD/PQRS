@@ -32,6 +32,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+             <script src="script/script.js" type="text/javascript"></script>
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -57,8 +58,7 @@
                             <h1 class="display-5 fw-bolder text-white mb-2">Estado de tu PQRS</h1>
                             <p class="lead text-white-50 mb-4">Mira el estado en el que se encuentra tu PQRS</p>
                             <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                                 <button class="btn btn-primary btn-lg px-4 me-sm-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar PQRS</button>
-                                <a class="btn btn-outline-light btn-lg px-4" href="#gugugugug">Eliminar PQRS</a>
+                 
                             </div>
                         </div>
                     </div>
@@ -121,8 +121,8 @@
                    
                             <td> 
 
-                                <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="" <i class="fa-solid fa-trash"></i> Eliminar </a>
-                                <a href="#" class="btn btn-primary" target="_blank"><i class="fa-solid fa-eye"></i> Editar</a>
+                                <a href="#" type= "button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="<%= idUsuario%>" <i class="fa-solid fa-trash"></i> Eliminar </a>
+                                <a href="#" class="btn btn-primary" target=""><i class="fa-solid fa-eye"></i> Editar</a>
                             </td>
                             </tr>
                                           <% } %>
@@ -130,20 +130,49 @@
 
                     </tbody>
                 </table>
+                        
+                        
+                           <div class="modal fade" id="eliminarTareaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="eliminarLabel"style="color: #000;">Eliminar Tutorial</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>¿Estás seguro de que deseas eliminar este tutorial?</h4>
+                        <p id="contactoNombre"></p>
+                        <form id="eliminarForm" action="SvEliminarTutorial" method="POST">
+                            <input type="hidden" id="Identificador" name="inputEliminar">
+                        </form>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" onclick="eliminarContacto()">Eliminar</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
                 <script src="ruta/a/tu/jquery.min.js"></script>
                 <script src="ruta/a/tu/bootstrap.bundle.min.js"></script>
-                <script>
-                // Script para activar el modal al hacer clic en el botón "Editar PQRS" sin jQuery
-                document.addEventListener('DOMContentLoaded', function() {
-                    var editarPQRSButton = document.querySelector('.btn-editar-pqrs');
-                    editarPQRSButton.addEventListener('click', function() {
-                        var modal = document.getElementById('exampleModal');
-                        var modalInstance = new bootstrap.Modal(modal);
-                        modalInstance.show();
-                    });
-                });
-                </script>
+                
+           
+   <script>
+            $('#eliminarTareaModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Botón que desencadenó el evento
+                var id = button.data('id'); // Obtén el nombre del contacto desde data-nombre
 
+                // Establecer el valor del campo oculto con el nombre del contacto
+                $('#Identificador').val(id);
+            });
+        </script>   
+
+        <script>
+            function eliminarContacto() {
+                $('#eliminarForm').submit(); // Enviar el formulario al servlet
+            }
+        </script>
 
             </html>

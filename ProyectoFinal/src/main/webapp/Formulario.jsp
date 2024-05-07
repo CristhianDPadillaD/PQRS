@@ -93,12 +93,12 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form action="SvAgregarRegistro" method="POST"  enctype="multipart/form-data">
+                        <form action="SvAgregarRegistro" method="POST"  enctype="multipart/form-data" id="contactForm" data-sb-form-api-token="API_TOKEN">
                             <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;" id="errorAlert">
                                 Debes proporcionar al menos la descripción o el archivo PDF.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
-                                 <input type = "numb"hidden value="<%= id%>" name="id">
+                                 <input hidden value="<%= id%>" name="id">
                             <!-- Name input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="name" type="text" placeholder="Enter your name..." required value="<%= nombreUsuario%>" />
@@ -108,13 +108,14 @@
                                 
                            
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="opcion" name="opciones" required >
-                                    <option hidden>Selecciona una opción</option>
-                                    <option value="1">Pregunta</option>
-                                    <option value="2">Queja</option>
-                                    <option value="3">Reclamo</option>
-                                    <option value="4">Sugerencias</option>
-                                </select>
+                            <select class="form-select" id="opcion" name="opciones" required>
+    <option hidden>Selecciona una opción</option>
+    <option value="1">Pregunta</option>
+    <option value="2">Queja</option>
+    <option value="3">Reclamo</option>
+    <option value="4">Sugerencias</option>
+</select>
+
                                 <div class="invalid-feedback" data-sb-feedback="opcion:required">Debes seleccionar una opción.</div>
                             </div>
                             <!-- Email address input-->
