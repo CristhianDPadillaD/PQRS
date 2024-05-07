@@ -72,9 +72,9 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
 
     
      public String[] loginUsuario(String correo, String contrasenia) throws SQLException {
-    String[] resultado = new String[3]; // Array para almacenar el nombre de usuario, el rol y la cédula
+    String[] resultado = new String[4]; // Array para almacenar el nombre de usuario, el rol y la cédula
     Connection conexion = con.Conectar();
-    String consulta = "SELECT Nombre, idroll, Cedula FROM usuario WHERE Correo = ? AND Contraseña = ?";
+    String consulta = "SELECT Nombre, idroll, Cedula, idUsuario FROM usuario WHERE Correo = ? AND Contraseña = ?";
     PreparedStatement statement = conexion.prepareStatement(consulta);
     statement.setString(1, correo);
     statement.setString(2, contrasenia);
@@ -84,6 +84,7 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
         // Las credenciales coinciden, usuario autenticado
         resultado[0] = resultSet.getString("Nombre"); // Obtener el nombre de usuario
         resultado[2] = resultSet.getString("Cedula"); // Obtener la cédula del usuario
+        resultado[3] = resultSet.getString("idUsuario");
         
         // Obtener el id del rol del usuario
         int idRol = resultSet.getInt("idroll");

@@ -25,6 +25,7 @@ import javax.servlet.http.Part;
  * @author ADMIN
  */
 @WebServlet(name = "SvAgregarRegistro", urlPatterns = {"/SvAgregarRegistro"})
+@MultipartConfig
 public class SvAgregarRegistro extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -46,6 +47,7 @@ public class SvAgregarRegistro extends HttpServlet {
             
     // Obtener parámetros del formulario HTML
     String descripcion = request.getParameter("descripcion");
+     System.out.println(descripcion);
      int idOpcion = Integer.parseInt(request.getParameter("opciones"));
      
     Part filePart = request.getPart("pdf");
@@ -54,7 +56,7 @@ public class SvAgregarRegistro extends HttpServlet {
         fileName = filePart.getSubmittedFileName();
     }
 
-    int idUsuario = 1;
+    int idUsuario = Integer.parseInt(request.getParameter("id"));
     int idEstado = 1;
     
     // Obtener la fecha actual
@@ -69,7 +71,7 @@ public class SvAgregarRegistro extends HttpServlet {
     
     // Instanciar el gestor de PQRS
     GestorUsuario gestor = new GestorUsuario();
-     out.println(descripcion);
+    
        out.println(fileName);
          out.println(idOpcion);
         

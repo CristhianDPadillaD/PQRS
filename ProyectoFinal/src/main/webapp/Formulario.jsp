@@ -11,6 +11,7 @@
     String nombreUsuario = (String) session.getAttribute("usuario");
     String correo = (String) session.getAttribute("correo");
     String cedula = (String) session.getAttribute("cedula");
+     String id = (String) session.getAttribute("id");
 %>
 
 <!DOCTYPE html>
@@ -25,7 +26,7 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="Formulario.jsp">Enviar PQRS</a></li>
+                        <li class="nav-item"><a class="nav-link" href="prueba.jsp">Enviar PQRS</a></li>
                         <li class="nav-item"><a class="nav-link" href="Estado.jsp">Estado PQRS</a></li>
                         <li class="nav-item"><a class="nav-link" href="index.jsp">Salir</a></li>
                     </ul>
@@ -92,24 +93,26 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN"  action="SvAgregarRegistro" method="Post" enctype="multipart/form-data">
+                        <form action="SvAgregarRegistro" method="POST"  enctype="multipart/form-data">
                             <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;" id="errorAlert">
                                 Debes proporcionar al menos la descripción o el archivo PDF.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." required value="<%=nombreUsuario%>" />
+                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." required value="<%= nombreUsuario%>" />
                                 <label for="name">Nombre Completo</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Complete este espacio.</div>
                             </div>
+                                
+                                <input hidden value="<%= id%>" name="id">
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="opcion" name="opciones" required>
                                     <option hidden>Selecciona una opción</option>
-                                    <option>Pregunta</option>
-                                    <option>Queja</option>
-                                    <option>Reclamo</option>
-                                    <option>Sugerencias</option>
+                                    <option value="1">Pregunta</option>
+                                    <option value="2">Queja</option>
+                                    <option value="3">Reclamo</option>
+                                    <option value="4">Sugerencias</option>
                                 </select>
                                 <div class="invalid-feedback" data-sb-feedback="opcion:required">Debes seleccionar una opción.</div>
                             </div>
@@ -128,7 +131,7 @@
                             </div>
                             <!-- Message input-->
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="message" name ="descripcion" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
+                                <textarea class="form-control" id="message" name ="descripcion" type="text" placeholder="Enter your message here..." style="height: 10rem"></textarea>
                                 <label for="message">Descripcion</label>
                                 <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
                             </div>

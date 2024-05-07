@@ -53,7 +53,8 @@
                 // Las credenciales son válidas
                 String nombreUsuario = resultadoAutenticacion[0];
                 String rol = resultadoAutenticacion[1];
-                String cedula = resultadoAutenticacion[2];
+                String cedula = resultadoAutenticacion[2];  
+                String id = resultadoAutenticacion[3];
                 request.getSession().setAttribute("usuario", nombreUsuario);
                 request.getSession().setAttribute("rol", rol);
                 if (rol.equals("Superusuario")) {
@@ -64,6 +65,7 @@
                 request.getSession().setAttribute("correo", Correo);
                 
                     request.getSession().setAttribute("cedula", cedula);
+                                        request.getSession().setAttribute("id", id);
                     // Si el usuario es un usuario regular, redireccionar a la página de usuario regular
                     response.sendRedirect("Formulario.jsp");
                 }

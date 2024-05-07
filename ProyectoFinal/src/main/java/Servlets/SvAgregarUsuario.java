@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author ADMIN
  */
 @WebServlet(name = "SvAgregarUsuario", urlPatterns = {"/SvAgregarUsuario"})
-@MultipartConfig
 public class SvAgregarUsuario extends HttpServlet {
 
   GestorUsuario gest = new GestorUsuario();
