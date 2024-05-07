@@ -4,13 +4,21 @@
  */
 package Servlets;
 
+import com.mycompany.proyectofinal.Conexion;
+import com.mycompany.proyectofinal.GestorUsuario;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import java.sql.Connection;
+import java.sql.Date;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -19,69 +27,61 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "SvAgregarRegistro", urlPatterns = {"/SvAgregarRegistro"})
 public class SvAgregarRegistro extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SvAgregarRegistro</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SvAgregarRegistro at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+     
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+ 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+            
+    // Obtener parámetros del formulario HTML
+    String descripcion = request.getParameter("descripcion");
+     int idOpcion = Integer.parseInt(request.getParameter("opciones"));
+     
+    Part filePart = request.getPart("pdf");
+    String fileName = "";
+    if (filePart != null) {
+        fileName = filePart.getSubmittedFileName();
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    int idUsuario = 1;
+    int idEstado = 1;
+    
+    // Obtener la fecha actual
+     Date fechaEnvio = new Date(System.currentTimeMillis());
+    
+    // Convertir la fecha a formato SQL date
+    java.sql.Date sqlDate = new java.sql.Date(fechaEnvio.getTime());
+    
+    // Conectar a la base de datos
+    Conexion con = new Conexion();
+    Connection conexion = con.Conectar();
+    
+    // Instanciar el gestor de PQRS
+    GestorUsuario gestor = new GestorUsuario();
+     out.println(descripcion);
+       out.println(fileName);
+         out.println(idOpcion);
+        
+    // Agregar el PQRS a la base de datos
+    gestor.AgregarPQRS(descripcion, fileName, sqlDate, idOpcion, idUsuario, idEstado, conexion);
+    // Redirigir a una página de confirmación o mostrar un mensaje de éxito
+    response.sendRedirect("Formulario.jsp");
+
+}   
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

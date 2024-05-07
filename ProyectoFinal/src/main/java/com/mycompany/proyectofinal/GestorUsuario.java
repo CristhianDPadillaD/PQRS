@@ -6,6 +6,7 @@ package com.mycompany.proyectofinal;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 public class GestorUsuario {
     Conexion con = new Conexion();
     
-    public void AgregarTutorial (String nombre, String apellido, String cedula, String correo, String contrasenia, int idroll, Connection conectar){
+    public void AgregarUsuario(String nombre, String apellido, String cedula, String correo, String contrasenia, int idroll, Connection conectar){
             if (conectar != null) {
             try {
                 // Llamar al procedimiento almacenado para agregar el tutorial
@@ -44,6 +45,31 @@ public class GestorUsuario {
         
         
     }
+
+public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idOpcion, int idUsuario, int idEstado, Connection conectar) {
+        if (conectar != null) {
+            try {
+                // Llamar al procedimiento almacenado para agregar el PQRS
+                CallableStatement stmt = conectar.prepareCall("{call AgregarRegistro(?, ?, ?, ?, ?, ?)}");
+                stmt.setString(1, descripcion);
+                stmt.setString(2, pdf);
+                stmt.setDate(3, fechaEnvio);
+                stmt.setInt(4, idOpcion);
+                stmt.setInt(5, idUsuario);
+                stmt.setInt(6, idEstado);
+                
+                stmt.execute();
+                conectar.close();
+                System.out.println("PQRS agregado con éxito");
+            } catch (SQLException e) {
+                System.out.println("Error al agregar el PQRS: " + e.getMessage());
+            }
+        } else {
+            System.out.println("No se pudo establecer una conexión a la base de datos.");
+        }
+    }
+
+
     
      public String[] loginUsuario(String correo, String contrasenia) throws SQLException {
     String[] resultado = new String[3]; // Array para almacenar el nombre de usuario, el rol y la cédula

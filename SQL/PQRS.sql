@@ -27,17 +27,18 @@ create table Estados (
 idEstado INT AUTO_INCREMENT PRIMARY KEY,
 Estado VARCHAR(50)
 );
-INSERT INTO Estados(Estado) VALUES ("Revisado"), ("Sin Revizar");
+INSERT INTO Estados(Estado) VALUES ("Sin revisar"), ("Revisado");
 
 create table PQRS (
 idOpcion int primary key auto_increment,
 Opcion varchar(150)
 );
-INSERT INTO PQRS(Opcion) VALUES ("Preguntas"), ("Quejas"), ("Reclamos"), ("Sugerencias");
+INSERT INTO PQRS(Opcion) VALUES ("Preguntas"), ("Quejas"), ("Reclamos"), ("Sugere|cias");
 
 create table Registros (
 id_Registros int primary key auto_increment,
 Descripcion varchar (200),
+Pdf varchar (200),
 FechaEnvio date,
 idOpcion int,
 idUsuario int,
@@ -69,14 +70,15 @@ DELIMITER //
 
 CREATE PROCEDURE AgregarRegistro(
     IN P_Descripcion varchar(150),
+    in p_Pdf varchar (200),
     IN P_FechaEnvio date,
     IN P_idOpcion int,
     IN P_idUsuario int,
     IN P_idEstado int
 )
 BEGIN
-    INSERT INTO Registros(Descripcion, FechaEnvio, idOpcion, idUsuario, idEstado)
-    VALUES (P_Descripcion, P_FechaEnvio, P_idOpcion, P_idUsuario, P_idEstado);
+    INSERT INTO Registros(Descripcion, Pdf, FechaEnvio, idOpcion, idUsuario, idEstado)
+    VALUES (P_Descripcion, p_Pdf, P_FechaEnvio, P_idOpcion, P_idUsuario, P_idEstado);
 END //
 
 DELIMITER ;

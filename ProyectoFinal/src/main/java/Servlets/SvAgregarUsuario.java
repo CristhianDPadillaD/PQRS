@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.Connection;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author ADMIN
  */
 @WebServlet(name = "SvAgregarUsuario", urlPatterns = {"/SvAgregarUsuario"})
+@MultipartConfig
 public class SvAgregarUsuario extends HttpServlet {
 
   GestorUsuario gest = new GestorUsuario();
@@ -51,7 +53,7 @@ public class SvAgregarUsuario extends HttpServlet {
         int id = 1;
         Connection conectar = con.Conectar();
         
-        gest.AgregarTutorial(nombre, apellido, cedula, correo, contraseña, id, conectar);
+        gest.AgregarUsuario(nombre, apellido, cedula, correo, contraseña, id, conectar);
         
         response.sendRedirect("index.jsp");
     }

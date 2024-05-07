@@ -6,13 +6,13 @@
 <%@include file= "templates/header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
- <% 
+<%
     // Obtener el nombre de usuario y el rol de la sesión
     String nombreUsuario = (String) session.getAttribute("usuario");
     String correo = (String) session.getAttribute("correo");
     String cedula = (String) session.getAttribute("cedula");
-    %>
-    
+%>
+
 <!DOCTYPE html>
 <html lang="en">
     <link rel="stylesheet" href="templates/Style2.css">
@@ -25,7 +25,7 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="Login.jsp">Enviar PQRS</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Formulario.jsp">Enviar PQRS</a></li>
                         <li class="nav-item"><a class="nav-link" href="Estado.jsp">Estado PQRS</a></li>
                         <li class="nav-item"><a class="nav-link" href="index.jsp">Salir</a></li>
                     </ul>
@@ -50,20 +50,20 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="templates/Style2.css" rel="stylesheet" />
     </head>
-    
+
     <body id="page-top">
 
         <!-- Masthead-->
-        
+
         <header class="masthead">
-    <div class="container px-4 px-lg-5 h-100">
+            <div class="container px-4 px-lg-5 h-100">
                 <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
                     <div class="col-lg-8 align-self-end">
                         <h1 class="text-white font-weight-bold">Sistema de PQRS</h1>
                         <hr class="divider" />
                     </div>
                     <div class="col-lg-8 align-self-baseline">
-                        
+
                         <p class="text-white-75 mb-5">Aquí puedes enviar tus Peticiones, Quejas, Reclamos y Sugerencias de forma rápida, obtener respuestas y soluciones eficientes, y ayudarnos a mejorar con tu feedback.</p>
                         <p class="text-white-75 mb-5">Tu opinión es importante. ¡Gracias por comunicarte con nosotros!</p>
                     </div>
@@ -80,7 +80,7 @@
                         <hr class="divider" />
                         <p class="text-muted mb-5">Enviar tus Peticiones, Quejas, Reclamos y Sugerencias de forma rápida.</p>
                         <p class="text-muted mb-5">Obtener respuestas y soluciones eficientes.</p>
-                       
+
                     </div>
                 </div>
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
@@ -92,11 +92,11 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN"  action="SvAgregarRegistro" method="Get">
-                               <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;" id="errorAlert">
-                                      Debes proporcionar al menos la descripción o el archivo PDF.
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
+                        <form id="contactForm" data-sb-form-api-token="API_TOKEN"  action="SvAgregarRegistro" method="Post" enctype="multipart/form-data">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;" id="errorAlert">
+                                Debes proporcionar al menos la descripción o el archivo PDF.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                             <!-- Name input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="name" type="text" placeholder="Enter your name..." required value="<%=nombreUsuario%>" />
@@ -104,12 +104,12 @@
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Complete este espacio.</div>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="opcion" required>
-                                    <option value="" hidden>Selecciona una opción</option>
-                                    <option value="Pregunta">Pregunta</option>
-                                    <option value="Queja">Queja</option>
-                                    <option value="Reclamo">Reclamo</option>
-                                      <option value="Sugerencias">Sugerencias</option>
+                                <select class="form-select" id="opcion" name="opciones" required>
+                                    <option hidden>Selecciona una opción</option>
+                                    <option>Pregunta</option>
+                                    <option>Queja</option>
+                                    <option>Reclamo</option>
+                                    <option>Sugerencias</option>
                                 </select>
                                 <div class="invalid-feedback" data-sb-feedback="opcion:required">Debes seleccionar una opción.</div>
                             </div>
@@ -128,18 +128,20 @@
                             </div>
                             <!-- Message input-->
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
+                                <textarea class="form-control" id="message" name ="descripcion" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
                                 <label for="message">Descripcion</label>
                                 <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
                             </div>
                             <div>
                                 <label for="formFileLg" class="form-label">Subir un archivo PDF</label>
-                                <input class="form-control form-control-lg" id="formFileLg" type="file" accept=".pdf">
+                                <input class="form-control form-control-lg" id="formFileLg" name = "pdf" type="file" accept=".pdf">
                             </div>
                             <br>
-                           <div class="d-grid">
-                                    <input type ="submit" value =" Enviar">
-                                    </form></div>
+                            <div class="d-grid">
+                                 <input type ="submit" value =" Enviar">
+                               </form>  
+                            </div>
+                             
                     </div>
                 </div>
             </div>
@@ -159,59 +161,62 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-        
-<script>
-// Variable de control para verificar si el formulario debe enviarse
-var enviarFormulario = false;
 
-// Agregar un event listener al formulario
-document.getElementById('contactForm').addEventListener('submit', function(event) {
-    var message = document.getElementById('message').value.trim(); // Obtener el valor del campo y eliminar espacios en blanco al inicio y al final
-    var fileInput = document.getElementById('formFileLg');
-    const errorAlert = document.getElementById('errorAlert');
-    const messageField = document.getElementById('message');
-    const messageFeedback = document.querySelector('[data-sb-feedback="message:required"]');
 
-    // Verificar si el campo de descripción está vacío
-    if (!message && fileInput.files.length === 0) {
 
-        event.preventDefault(); // Evitar el envío del formulario
-        enviarFormulario = false; // No permitir el envío del formulario
-    } else {
-        messageField.classList.remove('is-invalid'); // Quitar la clase de campo inválido si está presente
-        messageFeedback.style.display = 'none'; // Ocultar el mensaje de error si está visible
-        enviarFormulario = true; // Permitir el envío del formulario
-    }
 
-    // Verificar si al menos uno de los campos tiene valor
-    if (!message && !fileInput.files.length) {
-        errorAlert.style.display = 'block';
-        event.preventDefault(); // Evitar el envío del formulario si no se proporciona ninguno
-        enviarFormulario = false; // No permitir el envío del formulario si no se proporciona ninguno
-    } else {
-        errorAlert.style.display = 'none'; // Ocultar el mensaje de error si al menos uno de los campos tiene valor
-    }
-});
+        <script>
+        // Variable de control para verificar si el formulario debe enviarse
+            var enviarFormulario = false;
 
-// Agregar un event listener al botón cerrar del alert
-document.querySelector('#errorAlert .btn-close').addEventListener('click', function() {
-    // Ocultar el alert
-    document.getElementById('errorAlert').style.display = 'none';
+        // Agregar un event listener al formulario
+            document.getElementById('contactForm').addEventListener('submit', function (event) {
+                var message = document.getElementById('message').value.trim(); // Obtener el valor del campo y eliminar espacios en blanco al inicio y al final
+                var fileInput = document.getElementById('formFileLg');
+                const errorAlert = document.getElementById('errorAlert');
+                const messageField = document.getElementById('message');
+                const messageFeedback = document.querySelector('[data-sb-feedback="message:required"]');
 
-    // Actualizar el estado de la variable
-    enviarFormulario = false;
-});
+                // Verificar si el campo de descripción está vacío
+                if (!message && fileInput.files.length === 0) {
 
-// Agregar un event listener al campo del PDF para activar el envío del formulario si está lleno
-document.getElementById('formFileLg').addEventListener('change', function() {
-    if (this.files.length > 0) {
-        enviarFormulario = true; // Permitir el envío del formulario si el campo del PDF está lleno
-    }
-});
-</script>
+                    event.preventDefault(); // Evitar el envío del formulario
+                    enviarFormulario = false; // No permitir el envío del formulario
+                } else {
+                    messageField.classList.remove('is-invalid'); // Quitar la clase de campo inválido si está presente
+                    messageFeedback.style.display = 'none'; // Ocultar el mensaje de error si está visible
+                    enviarFormulario = true; // Permitir el envío del formulario
+                }
+
+                // Verificar si al menos uno de los campos tiene valor
+                if (!message && !fileInput.files.length) {
+                    errorAlert.style.display = 'block';
+                    event.preventDefault(); // Evitar el envío del formulario si no se proporciona ninguno
+                    enviarFormulario = false; // No permitir el envío del formulario si no se proporciona ninguno
+                } else {
+                    errorAlert.style.display = 'none'; // Ocultar el mensaje de error si al menos uno de los campos tiene valor
+                }
+            });
+
+        // Agregar un event listener al botón cerrar del alert
+            document.querySelector('#errorAlert .btn-close').addEventListener('click', function () {
+                // Ocultar el alert
+                document.getElementById('errorAlert').style.display = 'none';
+
+                // Actualizar el estado de la variable
+                enviarFormulario = false;
+            });
+
+        // Agregar un event listener al campo del PDF para activar el envío del formulario si está lleno
+            document.getElementById('formFileLg').addEventListener('change', function () {
+                if (this.files.length > 0) {
+                    enviarFormulario = true; // Permitir el envío del formulario si el campo del PDF está lleno
+                }
+            });
+        </script>
 
     </body>
-    
-    
+
+
 </html>
 
