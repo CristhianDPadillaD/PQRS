@@ -13,12 +13,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <%
-    GestorRegistros gestor = new GestorRegistros();
-      String id = request.getParameter("id");
-      int idUsuario = Integer.parseInt(id);
-   List<Registros> registro = gestor.listarRegistrosUsuario(idUsuario);
+        GestorRegistros gestor = new GestorRegistros();
+        String id = request.getParameter("id");
+        int idUsuario = Integer.parseInt(id);
+        List<Registros> registro = gestor.listarRegistrosUsuario(idUsuario);
     %>
-    
+
     <head>
         <link rel="stylesheet" href="templates/Style2.css">
         <meta charset="utf-8" />
@@ -32,7 +32,43 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
-             <script src="script/script.js" type="text/javascript"></script>
+        <script src="script/script.js" type="text/javascript"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            $('#eliminarTareaModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Botón que desencadenó el evento
+                var id = button.data('id'); // Obtén el ID desde data-id del botón
+
+                // Establecer el valor del campo oculto con el ID
+                $('#Identificador').val(id);
+            });
+        </script>
+
+        <script>
+            // Evento para cargar los detalles del tutorial seleccionado al abrir la modal de edición
+            $('#editarModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Botón que desencadenó el evento
+                var idTutorial = button.data('nombre'); // Obtener el ID del tutorial
+
+                $('#SvEditarTutorial').val(idTutorial);
+            });
+
+        </script>
+        <script>
+            function editarContacto() {
+                var nombreEdit = $('#nombreEdit').val().trim();
+                if (nombreEdit === "") {
+                    alert("Por favor, ingrese un nombre para el tutorial.");
+                    return false; // Evitar que se envíe el formulario si el nombre está vacío
+                }
+                // Si el nombre no está vacío, enviar el formulario al servlet
+                $('#editarForm').submit();
+            }
+
+        </script>
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -58,7 +94,7 @@
                             <h1 class="display-5 fw-bolder text-white mb-2">Estado de tu PQRS</h1>
                             <p class="lead text-white-50 mb-4">Mira el estado en el que se encuentra tu PQRS</p>
                             <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                 
+
                             </div>
                         </div>
                     </div>
@@ -100,79 +136,126 @@
                     </thead>
                     <tbody>
                         <tr>
-                             <% // Iteramos sobre la lista de tutoriales y mostramos los detalles de cada tutorial en una tabla HTML
-                                for (Registros regis :registro) {
+                            <% // Iteramos sobre la lista de tutoriales y mostramos los detalles de cada tutorial en una tabla HTML
+                                for (Registros regis : registro) {
                             %> 
-                <tr>
-                            <td><%=regis.getCorreoUsuario() %></td>
+                        <tr>
+                            <td><%=regis.getCorreoUsuario()%></td>
                             <td><%=regis.getNombreOpcion()%></td>
                             <td><%=regis.getEstado()%></td>
                             <td><%=regis.getFechaEnvio()%></td>
-                            <% if(regis.getDescripcion().isBlank()){%>
-                             <td> Sin descripción</td>
-                                <%}else{%>
-    <td><%=regis.getDescripcion()%></td>
-    <%}%>
-                          <% if(regis.getPdf().isBlank()){%>
-                             <td> Sin documento</td>
-                                <%}else{%>
-    <td><%=regis.getPdf()%></td>
-    <%}%>
-                   
+                            <% if (regis.getDescripcion().isBlank()) {%>
+                            <td> Sin descripción</td>
+                            <%} else {%>
+                            <td><%=regis.getDescripcion()%></td>
+                            <%}%>
+                            <% if (regis.getPdf().isBlank()) {%>
+                            <td> Sin documento</td>
+                            <%} else {%>
+                            <td><%=regis.getPdf()%></td>
+                            <%}%>
+
                             <td> 
 
                                 <a href="#" type= "button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="<%= idUsuario%>" <i class="fa-solid fa-trash"></i> Eliminar </a>
-                                <a href="#" class="btn btn-primary" target=""><i class="fa-solid fa-eye"></i> Editar</a>
+                                <a href="#" type= "button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal"target=""><i class="fa-solid fa-eye"></i> Editar</a>
                             </td>
-                            </tr>
-                                          <% } %>
+                        </tr>
+                        <% }%>
                         </tr>
 
                     </tbody>
                 </table>
-                        
-                        
-                           <div class="modal fade" id="eliminarTareaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title" id="eliminarLabel"style="color: #000;">Eliminar Tutorial</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h4>¿Estás seguro de que deseas eliminar este tutorial?</h4>
-                        <p id="contactoNombre"></p>
-                        <form id="eliminarForm" action="SvEliminarTutorial" method="POST">
-                            <input type="hidden" id="Identificador" name="inputEliminar">
-                        </form>
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" onclick="eliminarContacto()">Eliminar</button>
 
+
+                <div class="modal fade" id="eliminarTareaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="eliminarLabel"style="color: #000;">Eliminar Registro</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h4>¿Estás seguro de que deseas eliminar este registro?</h4>
+                                <p id="contactoNombre"></p>
+                                <form id="eliminarForm" action="SvEliminarRegistro" method="POST">
+                                    <input type="hidden" id="Identificador" name="inputEliminar">
+                                </form>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-danger" onclick="eliminarContacto()">Eliminar</button>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-                <script src="ruta/a/tu/jquery.min.js"></script>
-                <script src="ruta/a/tu/bootstrap.bundle.min.js"></script>
-                
-           
-   <script>
-            $('#eliminarTareaModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Botón que desencadenó el evento
-                var id = button.data('id'); // Obtén el nombre del contacto desde data-nombre
+                <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header"> 
+                                <h2 class="modal-title" id="editarModalLabel"style="color: #000;">Edita tu registro </h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Campos de edición para el tutorial -->
+                                <form id="editarForm" action="SvEditarTutorial" method="Get">
+                                    <input type="hidden" id="SvEditarTutorial" name="idTutorial">
+                                    <input type="text" class="form-control" id="nombreEdit" name="nombreEdit" placeholder="Nuevo nombre" required>
+                                    <select class="form-select" name="prioridadEdit" placeholder="Prio" >
+                                        <option value="" hidden>Nueva Prioridad</option>
+                                        <option> 1</option>
+                                        <option> 2</option>
+                                        <option> 3</option>
+                                        <option> 4</option>
+                                        <option> 5</option>
+                                        <option> 6</option>
+                                        <option> 7</option>
+                                        <option> 8</option>
+                                        <option> 9</option>
+                                        <option> 10</option>
+                                    </select>  
+                                    <select class="form-select" name="estadoEdit" placeholder="Estado" >
+                                        <option value="" hidden>Nuevo Estado</option>
+                                        <option> No revisado</option>
+                                        <option> Revisado</option>
+                                    </select>
 
-                // Establecer el valor del campo oculto con el nombre del contacto
-                $('#Identificador').val(id);
-            });
-        </script>   
+                                    <select class="form-select" id="categoriaEdit" name="categoriaEdit" placeholder="Categoria">
+                                        <option value="" hidden>Nueva Categoria</option>
 
-        <script>
-            function eliminarContacto() {
-                $('#eliminarForm').submit(); // Enviar el formulario al servlet
-            }
-        </script>
+                                        <option value=""><></option>
 
-            </html>
+                                    </select>
+                                    <input type="url" class="form-control" id="urlEdit" name="urlEdit" placeholder="Nueva URL">
+                                    <!-- Otros campos de edición -->
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" onclick="editarContacto()">Guardar Cambios</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+
+
+                <script>
+                    $('#eliminarTareaModal').on('show.bs.modal', function (event) {
+                        var button = $(event.relatedTarget); // Botón que desencadenó el evento
+                        var id = button.data('id'); // Obtén el nombre del contacto desde data-nombre
+
+                        // Establecer el valor del campo oculto con el nombre del contacto
+                        $('#Identificador').val(id);
+                    });
+                </script>   
+
+                <script>
+                    function eliminarContacto() {
+                        $('#eliminarForm').submit(); // Enviar el formulario al servlet
+                    }
+                </script>
+
+                </html>

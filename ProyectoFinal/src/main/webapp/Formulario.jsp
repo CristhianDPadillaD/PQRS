@@ -11,7 +11,7 @@
     String nombreUsuario = (String) session.getAttribute("usuario");
     String correo = (String) session.getAttribute("correo");
     String cedula = (String) session.getAttribute("cedula");
-     String id = (String) session.getAttribute("id");
+    String id = (String) session.getAttribute("id");
 %>
 
 <!DOCTYPE html>
@@ -98,23 +98,23 @@
                                 Debes proporcionar al menos la descripción o el archivo PDF.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
-                                 <input hidden value="<%= id%>" name="id">
+                            <input hidden value="<%= id%>" name="id">
                             <!-- Name input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="name" type="text" placeholder="Enter your name..." required value="<%= nombreUsuario%>" />
                                 <label for="name">Nombre Completo</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Complete este espacio.</div>
                             </div>
-                                
-                           
+
+
                             <div class="form-floating mb-3">
-                            <select class="form-select" id="opcion" name="opciones" required>
-    <option hidden>Selecciona una opción</option>
-    <option value="1">Pregunta</option>
-    <option value="2">Queja</option>
-    <option value="3">Reclamo</option>
-    <option value="4">Sugerencias</option>
-</select>
+                                <select class="form-select" id="opcion" name="opciones" required>
+                                    <option hidden>Selecciona una opción</option>
+                                    <option value="1">Pregunta</option>
+                                    <option value="2">Queja</option>
+                                    <option value="3">Reclamo</option>
+                                    <option value="4">Sugerencias</option>
+                                </select>
 
                                 <div class="invalid-feedback" data-sb-feedback="opcion:required">Debes seleccionar una opción.</div>
                             </div>
@@ -143,10 +143,10 @@
                             </div>
                             <br>
                             <div class="d-grid">
-                                 <input type ="submit" value =" Enviar">
-                               </form>  
+                                <input type ="submit" value =" Enviar">
+                                </form>  
                             </div>
-                             
+
                     </div>
                 </div>
             </div>
@@ -171,10 +171,10 @@
 
 
         <script>
-        // Variable de control para verificar si el formulario debe enviarse
+            // Variable de control para verificar si el formulario debe enviarse
             var enviarFormulario = false;
 
-        // Agregar un event listener al formulario
+            // Agregar un event listener al formulario
             document.getElementById('contactForm').addEventListener('submit', function (event) {
                 var message = document.getElementById('message').value.trim(); // Obtener el valor del campo y eliminar espacios en blanco al inicio y al final
                 var fileInput = document.getElementById('formFileLg');
@@ -203,7 +203,7 @@
                 }
             });
 
-        // Agregar un event listener al botón cerrar del alert
+            // Agregar un event listener al botón cerrar del alert
             document.querySelector('#errorAlert .btn-close').addEventListener('click', function () {
                 // Ocultar el alert
                 document.getElementById('errorAlert').style.display = 'none';
@@ -212,7 +212,7 @@
                 enviarFormulario = false;
             });
 
-        // Agregar un event listener al campo del PDF para activar el envío del formulario si está lleno
+            // Agregar un event listener al campo del PDF para activar el envío del formulario si está lleno
             document.getElementById('formFileLg').addEventListener('change', function () {
                 if (this.files.length > 0) {
                     enviarFormulario = true; // Permitir el envío del formulario si el campo del PDF está lleno
