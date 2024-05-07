@@ -76,7 +76,7 @@ public class Registros {
         this.idEstado = idEstado;
     }
     
-    public String getNombreOpcion (int idOpcion){
+    public String getNombreOpcion (){
           String nombreOpcion = "Opcion no encontrada"; // Valor por defecto
         
         // Crear una instancia de GestorCategorias
@@ -90,5 +90,39 @@ public class Registros {
         }
         
         return nombreOpcion;
+    }
+    
+    public String getCorreoUsuario(){
+         String correo  = "Correo no encontrada"; // Valor por defecto
+        
+        // Crear una instancia de GestorCategorias
+        GestorRegistros registro = new GestorRegistros();
+        
+        try {
+            // Llamar al método buscarCategoria de la instancia de GestorCategorias para obtener el nombre de la categoría
+            correo = registro.buscarCorreo(this.idUsuario);
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el nombre de la opcion: " + e.getMessage());
+        }
+        
+        return correo;
+        
+    }
+    
+    public String getEstado(){
+         String estado  = "Esatdo no encontrada"; // Valor por defecto
+        
+        // Crear una instancia de GestorCategorias
+        GestorRegistros registro = new GestorRegistros();
+        
+        try {
+            // Llamar al método buscarCategoria de la instancia de GestorCategorias para obtener el nombre de la categoría
+            estado = registro.buscarEstado(this.idEstado);
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el nombre de la opcion: " + e.getMessage());
+        }
+        
+        return estado;
+        
     }
 }

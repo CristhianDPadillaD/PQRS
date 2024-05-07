@@ -4,10 +4,21 @@
     Author     : Lenovo
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="com.mycompany.proyectofinal.Registros"%>
+<%@page import="com.mycompany.proyectofinal.Registros"%>
+<%@page import="com.mycompany.proyectofinal.GestorRegistros"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="en">
+    <%
+    GestorRegistros gestor = new GestorRegistros();
+      String id = request.getParameter("id");
+      int idUsuario = Integer.parseInt(id);
+   List<Registros> registro = gestor.listarRegistrosUsuario(idUsuario);
+    %>
+    
     <head>
         <link rel="stylesheet" href="templates/Style2.css">
         <meta charset="utf-8" />
@@ -89,18 +100,32 @@
                     </thead>
                     <tbody>
                         <tr>
-
-                            <td>Mark@gmail.com</td>
-                            <td>Pregunta</td>
-                            <td>Sin revisar</td>
-                            <td>holis</td>
-                            <td>124332424</td>
-                            <td>pdf</td>
+                             <% // Iteramos sobre la lista de tutoriales y mostramos los detalles de cada tutorial en una tabla HTML
+                                for (Registros regis :registro) {
+                            %> 
+                <tr>
+                            <td><%=regis.getCorreoUsuario() %></td>
+                            <td><%=regis.getNombreOpcion()%></td>
+                            <td><%=regis.getEstado()%></td>
+                            <td><%=regis.getFechaEnvio()%></td>
+                            <% if(regis.getDescripcion().isBlank()){%>
+                             <td> Sin descripción</td>
+                                <%}else{%>
+    <td><%=regis.getDescripcion()%></td>
+    <%}%>
+                          <% if(regis.getPdf().isBlank()){%>
+                             <td> Sin documento</td>
+                                <%}else{%>
+    <td><%=regis.getPdf()%></td>
+    <%}%>
+                   
                             <td> 
 
                                 <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="" <i class="fa-solid fa-trash"></i> Eliminar </a>
                                 <a href="#" class="btn btn-primary" target="_blank"><i class="fa-solid fa-eye"></i> Editar</a>
                             </td>
+                            </tr>
+                                          <% } %>
                         </tr>
 
                     </tbody>
