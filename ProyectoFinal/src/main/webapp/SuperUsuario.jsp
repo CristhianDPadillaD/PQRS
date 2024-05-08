@@ -12,7 +12,6 @@
 <html lang="en">
     <%
         GestorRegistros gestorRegistro = new GestorRegistros();
-        List<Registros> registro = gestorRegistro.listarRegistros();
     %>
     <head>
         <link rel="stylesheet" href="templates/Style2.css">
