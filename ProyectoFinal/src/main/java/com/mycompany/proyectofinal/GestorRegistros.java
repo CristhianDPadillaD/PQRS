@@ -264,6 +264,11 @@ return Cedula;
     }
     return registros;
 }
+  
+  public void cambiarEstado (int idRegistro, int idEstado){
+      
+      
+  }
  public Registros RegistrosUsuario(int idRegistro) {
               Registros registro = new Registros();
     try (Connection conexion = new Conexion().Conectar()) {

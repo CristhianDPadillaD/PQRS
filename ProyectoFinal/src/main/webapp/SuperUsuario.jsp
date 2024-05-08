@@ -12,6 +12,7 @@
 <html lang="en">
     <%
         GestorRegistros gestorRegistro = new GestorRegistros();
+        List<Registros> registro = gestorRegistro.listarTodosRegistros();
     %>
     <head>
         <link rel="stylesheet" href="templates/Style2.css">
@@ -68,19 +69,26 @@
                     <th scope="col">Tipo</th>
                     <th scope="col">Fecha envio</th>
                     <th scope="col">Estados</th>
+                     <th scope="col">Responder</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th>marcos</th>
-                    <td>Mark@gmail.com</td>
-                    <td>Pregunta</td>
-                    <td>12/12/12</td>
-                    <td> 
-                        <a href="#" class="btn btn-primary" target="_blank"><i class="fa-solid fa-eye"></i> Ver </a>
-                        <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="" <i class="fa-solid fa-trash"></i> Eliminar</a>
-                        <a href="#" class="btn btn-primary" target="_blank"><i class="fa-solid fa-eye"></i> Responder</a>
-                    </td>
+                     <% // Iteramos sobre la lista de tutoriales y mostramos los detalles de cada tutorial en una tabla HTML
+                                for (Registros regis : registro) {
+                            %> 
+                        <tr>
+                    <th><%=regis.getnombreUsuario()%></th>
+                    <td><%=regis.getCorreoUsuario()%></td>
+                    <td><%=regis.getNombreOpcion()%></td>
+                    <td><%=regis.getFechaEnvio()%></td>
+                    <td><%=regis.getEstado()%> </td>
+      
+                         <td><a href="#" class="btn btn-primary" target="_blank"><i class="fa-solid fa-eye"></i> Cambiar estado</a></td>
+                    </tr>
+                        <% }%>
+                    
                 </tr>
 
             </tbody>

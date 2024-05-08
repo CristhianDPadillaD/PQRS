@@ -15,8 +15,8 @@
 <html lang="en">
     <%
         GestorRegistros gestor = new GestorRegistros();
-          HttpSession se = request.getSession();
-    int idUsuario = (int) se.getAttribute("userId");
+        HttpSession se = request.getSession();
+        int idUsuario = (int) se.getAttribute("userId");
         List<Registros> registro = gestor.listarRegistrosUsuario(idUsuario);
     %>
 
@@ -38,7 +38,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    
+
 
 
         <script>
@@ -118,7 +118,6 @@
                 <table class="table table-dark table-borderless">
                     <thead>
                         <tr>
-
                             <th scope="col">Correo</th>
                             <th scope="col">Peticion</th>
                             <th scope="col">Estado</th>
@@ -129,38 +128,38 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <% if (registro.isEmpty()) { %>
                         <tr>
-                            <% // Iteramos sobre la lista de tutoriales y mostramos los detalles de cada tutorial en una tabla HTML
-                                for (Registros regis : registro) {
-                            %> 
+                            <td colspan="7" class="text-center">No se ha realizado registros</td>
+                        </tr>
+                        <% } else { %>
+                        <% for (Registros regis : registro) {%>
                         <tr>
                             <td><%=regis.getCorreoUsuario()%></td>
                             <td><%=regis.getNombreOpcion()%></td>
                             <td><%=regis.getEstado()%></td>
                             <td><%=regis.getFechaEnvio()%></td>
-                            <% if (regis.getDescripcion().isBlank()) {%>
-                            <td> Sin descripción</td>
-                            <%} else {%>
+                            <% if (regis.getDescripcion().isBlank()) { %>
+                            <td>Sin descripción</td>
+                            <% } else {%>
                             <td><%=regis.getDescripcion()%></td>
-                            <%}%>
-                            <% if (regis.getPdf().isBlank()) {%>
-                            <td> Sin documento</td>
-                            <%} else {%>
+                            <% } %>
+                            <% if (regis.getPdf().isBlank()) { %>
+                            <td>Sin documento</td>
+                            <% } else {%>
                             <td><%=regis.getPdf()%></td>
-                            <%}%>
+                            <% }%>
+                            <td style="white-space: nowrap;"> 
+                                <a href="#" type= "button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<%=regis.getIdRegistro()%>"><i class="fa-solid fa-eye"></i> Editar</a>
+                                <a href="#" type= "button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="<%=regis.getIdRegistro()%>"><i class="fa-solid fa-trash"></i> Eliminar</a>
 
-                            <td> 
-
-                                <a href="#" type= "button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="<%=regis.getIdRegistro()%>" <i class="fa-solid fa-trash"></i> Eliminar </a>
-                                <a href="#"  type= "button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<%=regis.getIdRegistro()%>"><i class="fa-solid fa-eye"></i> Editar</a>
-                           
                             </td>
                         </tr>
+                        <% } %>
                         <% }%>
-                        </tr>
-
                     </tbody>
                 </table>
+
 
 
                 <div class="modal fade" id="eliminarTareaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
@@ -186,29 +185,29 @@
                     </div>
                 </div>
 
-                        
-                        
-              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
-            <div class="modal-dialog"> 
-                <div class="modal-content"> 
-                    <div class="modal-header"> 
-                        <h5 class="modal-title" id="exampleModalLabel"style="color: #000;">Detalles del tutorial</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
-                    </div>
-                    <div class="modal-body"> 
-                        <form action="SvEditarRegistro" method="Post">
-                        <div id="libro-details"> 
-                            <!-- AquÃ­ se aÃ±ade los detalles del Tutorial-->
-                        </div>
+
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+                    <div class="modal-dialog"> 
+                        <div class="modal-content"> 
+                            <div class="modal-header"> 
+                                <h5 class="modal-title" id="exampleModalLabel"style="color: #000;">Detalles del tutorial</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
+                            </div>
+                            <div class="modal-body"> 
+                                <form action="SvEditarRegistro" method="Post">
+                                    <div id="libro-details"> 
+                                        <!-- AquÃ­ se aÃ±ade los detalles del Tutorial-->
+                                    </div>
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
+                                <input type = "Submit" value = "Actualizar">
+                                </form>
+                            </div>
+                        </div> 
                     </div> 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
-                        <input type = "Submit" value = "Actualizar">
-                        </form>
-                    </div>
-                </div> 
-            </div> 
-        </div>           
+                </div>           
 
 
                 <script>
@@ -226,13 +225,13 @@
                         $('#eliminarForm').submit(); // Enviar el formulario al servlet
                     }
                 </script>
-                
-  <script>
+
+                <script>
                     // funcion para mostrar los datos en la ventana modal
                     $('#exampleModal').on('show.bs.modal', function (event) {
                         var button = $(event.relatedTarget); // BotÃ³n que desencadenÃ³ el evento
                         var id = button.data('id'); // ObtÃ©n el nombre del perro
-                       
+
                         // Realiza una solicitud AJAX al servlet para obtener los detalles del perro por su nombre
                         $.ajax({
                             url: 'SvEditarRegistro?id=' + id, // Cambia 'id' por el nombre del parÃ¡metro que esperas en tu servlet
@@ -248,7 +247,7 @@
                         });
                     });
 
-        </script>
+                </script>
 
 
                 </html>
