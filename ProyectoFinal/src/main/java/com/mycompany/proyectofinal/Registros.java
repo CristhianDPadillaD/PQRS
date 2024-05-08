@@ -110,7 +110,7 @@ public class Registros {
     }
     
     public String getEstado(){
-         String estado  = "Esatdo no encontrada"; // Valor por defecto
+         String estado  = "Estado no encontrada"; // Valor por defecto
         
         // Crear una instancia de GestorCategorias
         GestorRegistros registro = new GestorRegistros();
@@ -125,4 +125,38 @@ public class Registros {
         return estado;
         
     }
+      public String getnombreUsuario(){
+         String nombre  = "nombre no encontrado"; // Valor por defecto
+        
+        // Crear una instancia de GestorCategorias
+        GestorRegistros registro = new GestorRegistros();
+        
+        try {
+            // Llamar al método buscarCategoria de la instancia de GestorCategorias para obtener el nombre de la categoría
+            nombre = registro.buscarNombreUsuario(this.idUsuario);
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el nombre de la opcion: " + e.getMessage());
+        }
+        
+        return nombre;
+        
+    }
+      public String getCedula(){
+         String cedula  = "cedula no encontrado"; // Valor por defecto
+        
+        // Crear una instancia de GestorCategorias
+        GestorRegistros registro = new GestorRegistros();
+        
+        try {
+            // Llamar al método buscarCategoria de la instancia de GestorCategorias para obtener el nombre de la categoría
+            cedula = registro.buscarCedula(this.idUsuario);
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el nombre de la opcion: " + e.getMessage());
+        }
+        
+        return cedula;
+        
+    }
+      
+      
 }

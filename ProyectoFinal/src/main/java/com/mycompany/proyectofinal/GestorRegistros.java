@@ -42,6 +42,22 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
             System.out.println("No se pudo establecer una conexión a la base de datos.");
         }
     }
+ public void borrarRegistro(int idRegistro) {
+        try (Connection conexion = new Conexion().Conectar()) {
+            String sql = "DELETE FROM Registros WHERE id_Registros = ?";
+            try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+                statement.setInt(1, idRegistro);
+                int filasAfectadas = statement.executeUpdate();
+                if (filasAfectadas > 0) {
+                    System.out.println("Tutorial con ID " + idRegistro + " eliminado exitosamente.");
+                } else {
+                    System.out.println("No se encontró un tutorial con ID " + idRegistro + " para eliminar.");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al intentar borrar el tutorial con ID " + idRegistro + ": " + ex.getMessage());
+        }
+    }
     public String buscarNombreOpcion(int idOpcion) throws SQLException {
     String nombreOpcion = null;
 
@@ -68,6 +84,28 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
     }   
 
     return nombreOpcion;
+}
+public void modificarRegistro(String Descripcion, String pdf, int idOpcion, int idRegistro) throws SQLException {
+    String query = "UPDATE Registros SET Descripcion = ?, Pdf = ?, idOpcion = ? WHERE id_Registros = ?";
+    
+    try (Connection connection = new Conexion().Conectar();
+         PreparedStatement statement = connection.prepareStatement(query)) {
+        // Establecer los parámetros en la consulta preparada
+        statement.setString(1, Descripcion);
+        statement.setString(2, pdf);
+        statement.setInt(3, idOpcion);
+        statement.setInt(4, idRegistro);
+
+        // Ejecutar la consulta
+        int filasModificadas = statement.executeUpdate();
+        if (filasModificadas != 1) {
+            throw new SQLException("No se pudo modificar el registro con ID: " + idRegistro);
+        }
+    } catch (SQLException e) {
+        // Manejar la excepción
+        e.printStackTrace();
+        throw e; // Relanzar la excepción para que sea manejada por quien llame al método
+    }
 }
     
        public String buscarCorreo(int idUsuario) throws SQLException {
@@ -120,9 +158,63 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
                 System.out.println("No se encontro el estado con el ID proporcionado: " + idEstado);
             }
         }
-    }   
+    }      return estado;
+         }
+    
+     public String buscarNombreUsuario (int idUsuario) throws SQLException {
+    String nombre = null;
 
-    return estado;
+    // Establecer la conexión a la base de datos
+    Conexion conexion = new Conexion();
+    Connection connection = conexion.Conectar();
+
+    // Consulta SQL para obtener el nombre de la opción por su idOpcion
+    String sql = "SELECT Nombre FROM usuario WHERE idUsuario = ?";
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        // Establecer el idOpcion como parámetro de la consulta
+        statement.setInt(1, idUsuario);
+
+        // Ejecutar la consulta
+        try (ResultSet resultSet = statement.executeQuery()) {
+            // Si se encuentra una fila, obtener el nombre de la opción
+            if (resultSet.next()) {
+                nombre = resultSet.getString("Nombre");
+            } else {
+                System.out.println("No se encontro el nombre con el ID proporcionado: " + idUsuario);
+            }
+        }
+    }   
+return nombre;
+ 
+}
+     
+        public String buscarCedula (int idUsuario) throws SQLException {
+    String Cedula = null;
+
+    // Establecer la conexión a la base de datos
+    Conexion conexion = new Conexion();
+    Connection connection = conexion.Conectar();
+
+    // Consulta SQL para obtener el nombre de la opción por su idOpcion
+    String sql = "SELECT Cedula FROM usuario WHERE idUsuario = ?";
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        // Establecer el idOpcion como parámetro de la consulta
+        statement.setInt(1, idUsuario);
+
+        // Ejecutar la consulta
+        try (ResultSet resultSet = statement.executeQuery()) {
+            // Si se encuentra una fila, obtener el nombre de la opción
+            if (resultSet.next()) {
+                Cedula = resultSet.getString("Cedula");
+            } else {
+                System.out.println("No se encontro el nombre con el ID proporcionado: " + idUsuario);
+            }
+        }
+    }   
+return Cedula;
+ 
 }
  public List<Registros> listarTodosRegistros() {
     List<Registros> registros = new ArrayList<>();
@@ -146,7 +238,8 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
     }
     return registros;
 }
- public List<Registros> listarRegistrosUsuario(int idUsuario) {
+ 
+  public List<Registros> listarRegistrosUsuario(int idUsuario) {
     List<Registros> registros = new ArrayList<>();
     try (Connection conexion = new Conexion().Conectar()) {
         String sql = "SELECT * FROM Registros WHERE idUsuario = ?";
@@ -155,6 +248,7 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Registros registro = new Registros();
+                    registro.setIdRegistro(resultSet.getInt("id_Registros"));
                     registro.setDescripcion(resultSet.getString("Descripcion"));
                     registro.setPdf(resultSet.getString("Pdf"));
                     registro.setFechaEnvio(resultSet.getDate("FechaEnvio"));
@@ -169,6 +263,31 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
         System.out.println("Error al listar los registros del usuario " + idUsuario + ": " + ex.getMessage());
     }
     return registros;
+}
+ public Registros RegistrosUsuario(int idRegistro) {
+              Registros registro = new Registros();
+    try (Connection conexion = new Conexion().Conectar()) {
+        String sql = "SELECT * FROM Registros WHERE id_Registros = ?";
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setInt(1, idRegistro);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+           
+                    registro.setIdRegistro(resultSet.getInt("id_Registros"));
+                    registro.setDescripcion(resultSet.getString("Descripcion"));
+                    registro.setPdf(resultSet.getString("Pdf"));
+                    registro.setFechaEnvio(resultSet.getDate("FechaEnvio"));
+                    registro.setIdOpcion(resultSet.getInt("idOpcion"));
+                    registro.setIdUsuario(resultSet.getInt("idUsuario"));
+                    registro.setIdEstado(resultSet.getInt("idEstado"));
+               
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error al listar los registros del usuario " + idRegistro + ": " + ex.getMessage());
+    }
+    return registro ;
 }
 
 

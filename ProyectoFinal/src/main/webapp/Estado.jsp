@@ -8,14 +8,15 @@
 <%@page import="com.mycompany.proyectofinal.Registros"%>
 <%@page import="com.mycompany.proyectofinal.Registros"%>
 <%@page import="com.mycompany.proyectofinal.GestorRegistros"%>
+<%@page import="javax.servlet.http.HttpSession"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="en">
     <%
         GestorRegistros gestor = new GestorRegistros();
-        String id = request.getParameter("id");
-        int idUsuario = Integer.parseInt(id);
+          HttpSession se = request.getSession();
+    int idUsuario = (int) se.getAttribute("userId");
         List<Registros> registro = gestor.listarRegistrosUsuario(idUsuario);
     %>
 
@@ -37,15 +38,8 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-        <script>
-            $('#eliminarTareaModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Botón que desencadenó el evento
-                var id = button.data('id'); // Obtén el ID desde data-id del botón
+    
 
-                // Establecer el valor del campo oculto con el ID
-                $('#Identificador').val(id);
-            });
-        </script>
 
         <script>
             // Evento para cargar los detalles del tutorial seleccionado al abrir la modal de edición
@@ -157,8 +151,9 @@
 
                             <td> 
 
-                                <a href="#" type= "button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="<%= idUsuario%>" <i class="fa-solid fa-trash"></i> Eliminar </a>
-                                <a href="#" type= "button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal"target=""><i class="fa-solid fa-eye"></i> Editar</a>
+                                <a href="#" type= "button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="<%=regis.getIdRegistro()%>" <i class="fa-solid fa-trash"></i> Eliminar </a>
+                                <a href="#"  type= "button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<%=regis.getIdRegistro()%>"><i class="fa-solid fa-eye"></i> Editar</a>
+                           
                             </td>
                         </tr>
                         <% }%>
@@ -191,55 +186,29 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header"> 
-                                <h2 class="modal-title" id="editarModalLabel"style="color: #000;">Edita tu registro </h2>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- Campos de edición para el tutorial -->
-                                <form id="editarForm" action="SvEditarTutorial" method="Get">
-                                    <input type="hidden" id="SvEditarTutorial" name="idTutorial">
-                                    <input type="text" class="form-control" id="nombreEdit" name="nombreEdit" placeholder="Nuevo nombre" required>
-                                    <select class="form-select" name="prioridadEdit" placeholder="Prio" >
-                                        <option value="" hidden>Nueva Prioridad</option>
-                                        <option> 1</option>
-                                        <option> 2</option>
-                                        <option> 3</option>
-                                        <option> 4</option>
-                                        <option> 5</option>
-                                        <option> 6</option>
-                                        <option> 7</option>
-                                        <option> 8</option>
-                                        <option> 9</option>
-                                        <option> 10</option>
-                                    </select>  
-                                    <select class="form-select" name="estadoEdit" placeholder="Estado" >
-                                        <option value="" hidden>Nuevo Estado</option>
-                                        <option> No revisado</option>
-                                        <option> Revisado</option>
-                                    </select>
-
-                                    <select class="form-select" id="categoriaEdit" name="categoriaEdit" placeholder="Categoria">
-                                        <option value="" hidden>Nueva Categoria</option>
-
-                                        <option value=""><></option>
-
-                                    </select>
-                                    <input type="url" class="form-control" id="urlEdit" name="urlEdit" placeholder="Nueva URL">
-                                    <!-- Otros campos de edición -->
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary" onclick="editarContacto()">Guardar Cambios</button>
-
-                            </div>
-                        </div>
+                        
+                        
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+            <div class="modal-dialog"> 
+                <div class="modal-content"> 
+                    <div class="modal-header"> 
+                        <h5 class="modal-title" id="exampleModalLabel"style="color: #000;">Detalles del tutorial</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
                     </div>
-                </div>                
+                    <div class="modal-body"> 
+                        <form action="SvEditarRegistro" method="Post">
+                        <div id="libro-details"> 
+                            <!-- AquÃ­ se aÃ±ade los detalles del Tutorial-->
+                        </div>
+                    </div> 
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
+                        <input type = "Submit" value = "Actualizar">
+                        </form>
+                    </div>
+                </div> 
+            </div> 
+        </div>           
 
 
                 <script>
@@ -257,5 +226,29 @@
                         $('#eliminarForm').submit(); // Enviar el formulario al servlet
                     }
                 </script>
+                
+  <script>
+                    // funcion para mostrar los datos en la ventana modal
+                    $('#exampleModal').on('show.bs.modal', function (event) {
+                        var button = $(event.relatedTarget); // BotÃ³n que desencadenÃ³ el evento
+                        var id = button.data('id'); // ObtÃ©n el nombre del perro
+                       
+                        // Realiza una solicitud AJAX al servlet para obtener los detalles del perro por su nombre
+                        $.ajax({
+                            url: 'SvEditarRegistro?id=' + id, // Cambia 'id' por el nombre del parÃ¡metro que esperas en tu servlet
+                            method: 'GET',
+                            success: function (data) {
+                                // Actualiza el contenido del modal con los detalles del perro
+                                $('#libro-details').html(data);
+                            },
+                            error: function () {
+                                // Maneja errores aquÃ­ si es necesario y se imprime en consola
+                                console.log('Error al cargar los detalles del registro.');
+                            }
+                        });
+                    });
+
+        </script>
+
 
                 </html>
