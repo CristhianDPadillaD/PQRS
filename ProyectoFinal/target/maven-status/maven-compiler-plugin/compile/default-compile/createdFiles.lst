@@ -5,6 +5,8 @@ com\mycompany\proyectofinal\GestorUsuario.class
 com\mycompany\proyectofinal\Conexion.class
 com\mycompany\proyectofinal\GestorRegistros.class
 Servlets\SvAgregarRegistro.class
+Servlets\SvCambioEstado.class
+com\mycompany\proyectofinal\GestorRegistros$1.class
 Servlets\SvAcceder.class
 com\mycompany\proyectofinal\Registros.class
 Servlets\SvEditarRegistro.class

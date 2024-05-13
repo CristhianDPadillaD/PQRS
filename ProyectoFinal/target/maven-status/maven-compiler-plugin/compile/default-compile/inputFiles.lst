@@ -1,8 +1,4 @@
 E:\GitHub\PQRS\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\GestorUsuario.java
-E:\GitHub\PQRS\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\Registros.java
-E:\GitHub\PQRS\ProyectoFinal\src\main\java\Servlets\SvAgregarRegistro.java
-E:\GitHub\PQRS\ProyectoFinal\src\main\java\Servlets\SvAcceder.java
-E:\GitHub\PQRS\ProyectoFinal\src\main\java\Servlets\SvEliminarRegistro.java
 E:\GitHub\PQRS\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\Usuario.java
 E:\GitHub\PQRS\ProyectoFinal\src\main\java\Servlets\SvAgregarUsuario.java
 E:\GitHub\PQRS\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\GestorRegistros.java
@@ -10,3 +6,8 @@ E:\GitHub\PQRS\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\resources
 E:\GitHub\PQRS\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\JakartaRestConfiguration.java
 E:\GitHub\PQRS\ProyectoFinal\src\main\java\Servlets\SvEditarRegistro.java
 E:\GitHub\PQRS\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\Conexion.java
+E:\GitHub\PQRS\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\Registros.java
+E:\GitHub\PQRS\ProyectoFinal\src\main\java\Servlets\SvCambioEstado.java
+E:\GitHub\PQRS\ProyectoFinal\src\main\java\Servlets\SvAgregarRegistro.java
+E:\GitHub\PQRS\ProyectoFinal\src\main\java\Servlets\SvAcceder.java
+E:\GitHub\PQRS\ProyectoFinal\src\main\java\Servlets\SvEliminarRegistro.java

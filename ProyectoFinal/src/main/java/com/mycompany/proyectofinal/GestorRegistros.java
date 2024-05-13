@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyectofinal;
 
+import java.net.Authenticator;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,13 +13,56 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Properties;
+import javax.mail.Session;
+import javax.mail.*;
+import javax.mail.internet.*;
 /**
  *
  * @author ADMIN
  */
 public class GestorRegistros {
     
+    public void enviarCorreo(String destinatario) {
+    // Configurar las propiedades del servidor de correo
+    String cuerpo = "Hola,\n\nSe ha revisado tu solicitud por lo tanto se tendrá en cuenta en nuestro servicios.\n\nGracias por darnos su opinion, \nTu aplicación";
+    String asunto = "Respuesta peticion";
+    Properties props = new Properties();
+    props.put("mail.smtp.host", "smtp.gmail.com");
+    props.put("mail.smtp.auth", "true");
+    props.put("mail.smtp.port", "587");
+    props.put("mail.smtp.starttls.enable", "true");
+
+    // Establecer las credenciales del remitente
+    String correoRemitente = "enviarcorreos87@gmail.com";
+    String contraseñaRemitente = "CorreoAdmin";
+
+    // Crear una sesión de correo
+    Session session = Session.getInstance(props, new javax.mail.Authenticator() 
+    {
+    @Override
+        protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(correoRemitente, contraseñaRemitente);
+        }
+    });
+
+    try {
+        // Crear un mensaje de correo
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(correoRemitente));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+        message.setSubject(asunto);
+        message.setText(cuerpo);
+
+        // Enviar el correo electrónico
+        Transport.send(message);
+
+        System.out.println("Correo electrónico enviado exitosamente a " + destinatario);
+    } catch (MessagingException e) {
+        throw new RuntimeException("Error al enviar el correo electrónico", e);
+    }
+
+            }
     
 public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idOpcion, int idUsuario, int idEstado, Connection conectar) {
         if (conectar != null) {
@@ -107,6 +151,27 @@ public void modificarRegistro(String Descripcion, String pdf, int idOpcion, int 
         throw e; // Relanzar la excepción para que sea manejada por quien llame al método
     }
 }
+
+public void cambiarEstado(int idRegistro, int estado) throws SQLException {
+    String query = "UPDATE Registros SET idEstado = ? WHERE id_Registros = ?";
+    try (Connection connection = new Conexion().Conectar();
+         PreparedStatement statement = connection.prepareStatement(query)) {
+        // Establecer los parámetros en la consulta preparada
+        statement.setInt(1, estado);
+        statement.setInt(2, idRegistro);
+
+        // Ejecutar la consulta
+        int filasModificadas = statement.executeUpdate();
+        if (filasModificadas != 1) {
+            throw new SQLException("No se pudo modificar el registro con ID: " + idRegistro);
+        }
+    } catch (SQLException e) {
+        // Manejar la excepción
+        e.printStackTrace();
+        throw e; // Relanzar la excepción para que sea manejada por quien llame al método
+    }
+}
+
     
        public String buscarCorreo(int idUsuario) throws SQLException {
     String correo = null;
@@ -224,6 +289,7 @@ return Cedula;
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 Registros registro = new Registros();
+                  registro.setIdRegistro(resultSet.getInt("id_Registros"));
                 registro.setDescripcion(resultSet.getString("Descripcion"));
                 registro.setPdf(resultSet.getString("Pdf"));
                 registro.setFechaEnvio(resultSet.getDate("FechaEnvio"));
@@ -265,10 +331,7 @@ return Cedula;
     return registros;
 }
   
-  public void cambiarEstado (int idRegistro, int idEstado){
-      
-      
-  }
+
  public Registros RegistrosUsuario(int idRegistro) {
               Registros registro = new Registros();
     try (Connection conexion = new Conexion().Conectar()) {

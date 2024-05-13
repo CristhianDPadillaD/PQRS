@@ -85,7 +85,7 @@
                     <td><%=regis.getFechaEnvio()%></td>
                     <td><%=regis.getEstado()%> </td>
       
-                         <td><a href="#" class="btn btn-primary" target="_blank"><i class="fa-solid fa-eye"></i> Cambiar estado</a></td>
+                    <td><a href="SvCambioEstado?id=<%=regis.getIdRegistro()%> "class="btn btn-primary" <i class="fa-solid fa-eye"></i> Cambiar estado</a></td>
                     </tr>
                         <% }%>
                     

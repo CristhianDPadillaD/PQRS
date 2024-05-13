@@ -142,7 +142,7 @@
                             <% if (regis.getDescripcion().isBlank()) { %>
                             <td>Sin descripción</td>
                             <% } else {%>
-                            <td><%=regis.getDescripcion()%></td>
+                            <td><%=regis.getDescripcion()%></td>    
                             <% } %>
                             <% if (regis.getPdf().isBlank()) { %>
                             <td>Sin documento</td>
