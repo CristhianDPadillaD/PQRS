@@ -74,6 +74,11 @@
                 </tr>
             </thead>
             <tbody>
+                  <% if (registro.isEmpty()) { %>
+                        <tr>
+                            <td colspan="7" class="text-center">No hay registros</td>
+                        </tr>
+                        <% } else { %>
                 <tr>
                      <% // Iteramos sobre la lista de tutoriales y mostramos los detalles de cada tutorial en una tabla HTML
                                 for (Registros regis : registro) {
@@ -84,10 +89,18 @@
                     <td><%=regis.getNombreOpcion()%></td>
                     <td><%=regis.getFechaEnvio()%></td>
                     <td><%=regis.getEstado()%> </td>
-      
-                    <td><a href="SvCambioEstado?id=<%=regis.getIdRegistro()%> "class="btn btn-primary" <i class="fa-solid fa-eye"></i> Cambiar estado</a></td>
+                   
+                    <td> <%if (regis.getIdEstado() == 1){%>
+                        <a href="SvCambioEstado?id=<%=regis.getIdRegistro()%> "class="btn btn-primary" <i class="fa-solid fa-eye"></i> Responder</a>
+                     <%}else{%>
+                        <a href="#" type= "button" class="btn btn-secondary disabled" ><i class="fa-solid fa-eye"></i> Responder</a>
+                    <%}%>
+                    </td>
                     </tr>
+                   
+                    
                         <% }%>
+                           <% }%>
                     
                 </tr>
 

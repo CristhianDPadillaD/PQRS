@@ -11,6 +11,7 @@ import java.sql.SQLException;
  * @author Lenovo
  */
 public class Usuario {
+    int idUsuario;
     String Nombre;
     String Apellido;
     String Cedula;
@@ -18,6 +19,16 @@ public class Usuario {
     String Contraseña;
     int idroll;
 
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    
+    
     public String getNombre() {
         return Nombre;
     }

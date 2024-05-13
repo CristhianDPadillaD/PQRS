@@ -147,12 +147,19 @@
                             <% if (regis.getPdf().isBlank()) { %>
                             <td>Sin documento</td>
                             <% } else {%>
-                            <td><%=regis.getPdf()%></td>
+                            <td><a href="<%=regis.getPdf()%>" target="_blank"><%=regis.getPdf()%> </a></td>
+                            
                             <% }%>
                             <td style="white-space: nowrap;"> 
+                                <%if (regis.getIdEstado() == 1){%>
                                 <a href="#" type= "button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<%=regis.getIdRegistro()%>"><i class="fa-solid fa-eye"></i> Editar</a>
                                 <a href="#" type= "button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="<%=regis.getIdRegistro()%>"><i class="fa-solid fa-trash"></i> Eliminar</a>
-
+                                   <%}else {%>
+                                   
+                                   <a href="#" type= "button" class="btn btn-secondary disabled" ><i class="fa-solid fa-eye"></i> Editar</a>
+                                <a href="#" type= "button" class="btn btn-outline disabled" ><i class="fa-solid fa-trash"></i> Eliminar</a>
+                                   
+                                   <%}%>
                             </td>
                         </tr>
                         <% } %>

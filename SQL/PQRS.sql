@@ -45,7 +45,8 @@ idUsuario int,
 idEstado int,
 foreign key (idOpcion) references PQRS (idOpcion) ,
 foreign key (idUsuario) references usuario (idUsuario) ,
-foreign key (idEstado) references Estados (idEstado) 
+foreign key (idEstado) references Estados (idEstado), 
+ CONSTRAINT fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario) ON DELETE CASCADE
 );
 
     

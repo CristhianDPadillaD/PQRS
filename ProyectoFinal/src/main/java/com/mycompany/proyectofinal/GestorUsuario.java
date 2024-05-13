@@ -42,12 +42,45 @@ public class GestorUsuario {
             }
         } else {
             System.out.println("No se pudo establecer una conexión a la base de datos.");
+        }   
+    }
+    
+     public void eliminarUsuario(int idUsuario) {
+        try (Connection conexion = new Conexion().Conectar()) {
+            String sql = "DELETE FROM usuario WHERE idUsuario = ?";
+            try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+                statement.setInt(1, idUsuario);
+                int filasAfectadas = statement.executeUpdate();
+                if (filasAfectadas > 0) {
+                    System.out.println("Tutorial con ID " + idUsuario + " eliminado exitosamente.");
+                } else {
+                    System.out.println("No se encontró un tutorial con ID " + idUsuario + " para eliminar.");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al intentar borrar el tutorial con ID " + idUsuario + ": " + ex.getMessage());
         }
-        
-        
-        
     }
 
+public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
+    String query = "UPDATE usuario SET idroll = ? WHERE idUsuario = ?";
+    try (Connection connection = new Conexion().Conectar();
+         PreparedStatement statement = connection.prepareStatement(query)) {
+        // Establecer los parámetros en la consulta preparada
+        statement.setInt(1, idRoll);
+        statement.setInt(2, idUsuario);
+
+        // Ejecutar la consulta
+        int filasModificadas = statement.executeUpdate();
+        if (filasModificadas != 1) {
+            throw new SQLException("No se pudo modificar el registro con ID: " + idUsuario);
+        }
+    } catch (SQLException e) {
+        // Manejar la excepción
+        e.printStackTrace();
+        throw e; // Relanzar la excepción para que sea manejada por quien llame al método
+    }
+}
 
 
     
@@ -126,6 +159,7 @@ public class GestorUsuario {
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 Usuario user = new Usuario();
+                user.setIdUsuario(resultSet.getInt("idUsuario"));
                 user.setNombre(resultSet.getString("Nombre"));
                 user.setApellido(resultSet.getString("Apellido"));
                 user.setCedula(resultSet.getString("Cedula"));

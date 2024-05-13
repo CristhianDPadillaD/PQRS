@@ -87,7 +87,7 @@
                     <td><%=usuario.getRoll()%></td>
                     <td><%=usuario.getCedula()%></td>
                     <td> 
-                        <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="" <i class="fa-solid fa-trash"></i> Cambiar roll </a>
+                        <a href="SvCambiarRoll?id=<%= usuario.getIdUsuario()%>" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="" <i class="fa-solid fa-trash"></i> Cambiar roll </a>
                        
                     </td>
                     </tr>

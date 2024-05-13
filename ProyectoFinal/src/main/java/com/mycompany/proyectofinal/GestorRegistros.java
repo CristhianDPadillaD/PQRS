@@ -23,9 +23,8 @@ import javax.mail.internet.*;
  */
 public class GestorRegistros {
     
-    public void enviarCorreo(String destinatario) {
+    public void enviarCorreo(String destinatario, String cuerpo) {
     // Configurar las propiedades del servidor de correo
-    String cuerpo = "Hola,\n\nSe ha revisado tu solicitud por lo tanto se tendrá en cuenta en nuestro servicios.\n\nGracias por darnos su opinion, \nTu aplicación";
     String asunto = "Respuesta peticion";
     Properties props = new Properties();
     props.put("mail.smtp.host", "smtp.gmail.com");
@@ -35,7 +34,7 @@ public class GestorRegistros {
 
     // Establecer las credenciales del remitente
     String correoRemitente = "enviarcorreos87@gmail.com";
-    String contraseñaRemitente = "CorreoAdmin";
+    String contraseñaRemitente = "whnb kxni dgya rltn";     
 
     // Crear una sesión de correo
     Session session = Session.getInstance(props, new javax.mail.Authenticator() 
@@ -86,6 +85,7 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
             System.out.println("No se pudo establecer una conexión a la base de datos.");
         }
     }
+
  public void borrarRegistro(int idRegistro) {
         try (Connection conexion = new Conexion().Conectar()) {
             String sql = "DELETE FROM Registros WHERE id_Registros = ?";
@@ -102,6 +102,7 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
             System.out.println("Error al intentar borrar el tutorial con ID " + idRegistro + ": " + ex.getMessage());
         }
     }
+ 
     public String buscarNombreOpcion(int idOpcion) throws SQLException {
     String nombreOpcion = null;
 

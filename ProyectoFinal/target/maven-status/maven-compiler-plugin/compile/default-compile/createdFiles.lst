@@ -12,3 +12,4 @@ com\mycompany\proyectofinal\Registros.class
 Servlets\SvEditarRegistro.class
 com\mycompany\proyectofinal\JakartaRestConfiguration.class
 com\mycompany\proyectofinal\Usuario.class
+Servlets\SvCambiarRoll.class
