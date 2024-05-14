@@ -33,7 +33,7 @@ create table PQRS (
 idOpcion int primary key auto_increment,
 Opcion varchar(150)
 );
-INSERT INTO PQRS(Opcion) VALUES ("Preguntas"), ("Quejas"), ("Reclamos"), ("Sugerencias");
+INSERT INTO PQRS(Opcion) VALUES ("Peticion"), ("Quejas"), ("Reclamos"), ("Sugerencias");
 
 create table Registros (
 id_Registros int primary key auto_increment,

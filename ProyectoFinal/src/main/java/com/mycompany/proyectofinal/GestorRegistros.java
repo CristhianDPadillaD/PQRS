@@ -23,6 +23,7 @@ import javax.mail.internet.*;
  */
 public class GestorRegistros {
     
+    //metodo para enviar correos
     public void enviarCorreo(String destinatario, String cuerpo) {
     // Configurar las propiedades del servidor de correo
     String asunto = "Respuesta peticion";
@@ -63,6 +64,9 @@ public class GestorRegistros {
 
             }
     
+    
+    //metodo para agregar pqrs
+    
 public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idOpcion, int idUsuario, int idEstado, Connection conectar) {
         if (conectar != null) {
             try {
@@ -86,6 +90,8 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
         }
     }
 
+
+//metodo para eliminar pqrs
  public void borrarRegistro(int idRegistro) {
         try (Connection conexion = new Conexion().Conectar()) {
             String sql = "DELETE FROM Registros WHERE id_Registros = ?";
@@ -103,6 +109,7 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
         }
     }
  
+ //metodo para encontrar el nombre de una opcion a partir del idOpcion
     public String buscarNombreOpcion(int idOpcion) throws SQLException {
     String nombreOpcion = null;
 
@@ -130,6 +137,8 @@ public void AgregarPQRS(String descripcion, String pdf, Date fechaEnvio, int idO
 
     return nombreOpcion;
 }
+    
+    //Metodo para editar un pqrs
 public void modificarRegistro(String Descripcion, String pdf, int idOpcion, int idRegistro) throws SQLException {
     String query = "UPDATE Registros SET Descripcion = ?, Pdf = ?, idOpcion = ? WHERE id_Registros = ?";
     
@@ -153,6 +162,7 @@ public void modificarRegistro(String Descripcion, String pdf, int idOpcion, int 
     }
 }
 
+// metodo para cambiar de estado un pqrs
 public void cambiarEstado(int idRegistro, int estado) throws SQLException {
     String query = "UPDATE Registros SET idEstado = ? WHERE id_Registros = ?";
     try (Connection connection = new Conexion().Conectar();
@@ -174,7 +184,8 @@ public void cambiarEstado(int idRegistro, int estado) throws SQLException {
 }
 
     
-       public String buscarCorreo(int idUsuario) throws SQLException {
+//metodo para encontrar el nombre correo con el id usuario
+    public String buscarCorreo(int idUsuario) throws SQLException {
     String correo = null;
 
     // Establecer la conexión a la base de datos
@@ -201,6 +212,8 @@ public void cambiarEstado(int idRegistro, int estado) throws SQLException {
 
     return correo;
 }
+    
+     //metodo para encontrar el estado a partir del idEstadoS
          public String buscarEstado(int idEstado) throws SQLException {
     String estado = null;
 
@@ -227,6 +240,8 @@ public void cambiarEstado(int idRegistro, int estado) throws SQLException {
     }      return estado;
          }
     
+         
+          //metodo para encontrar el nombre de una usuario a partir del idUsuario
      public String buscarNombreUsuario (int idUsuario) throws SQLException {
     String nombre = null;
 
@@ -254,7 +269,7 @@ public void cambiarEstado(int idRegistro, int estado) throws SQLException {
 return nombre;
  
 }
-     
+      //metodo para encontrar la cedual de un usuario  a partir del idUsuario
         public String buscarCedula (int idUsuario) throws SQLException {
     String Cedula = null;
 
@@ -282,6 +297,8 @@ return nombre;
 return Cedula;
  
 }
+        
+        //metodo para listar todos los registros 
  public List<Registros> listarTodosRegistros() {
     List<Registros> registros = new ArrayList<>();
     try (Connection conexion = new Conexion().Conectar()) {
@@ -306,6 +323,142 @@ return Cedula;
     return registros;
 }
  
+ //metodo para ordenar los registros de un usuario
+ public List<Registros> listarRegistrosUsuarioOrdenados(int idUsuario, String columnaOrdenamiento, String direccionOrden) {
+    List<Registros> registros = new ArrayList<>();
+    try (Connection conexion = new Conexion().Conectar()) {
+        String sql = "SELECT * FROM Registros WHERE idUsuario = ? ORDER BY " + columnaOrdenamiento + " " + direccionOrden;
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setInt(1, idUsuario);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+               Registros registro = new Registros();
+                  registro.setIdRegistro(resultSet.getInt("id_Registros"));
+                registro.setDescripcion(resultSet.getString("Descripcion"));
+                registro.setPdf(resultSet.getString("Pdf"));
+                registro.setFechaEnvio(resultSet.getDate("FechaEnvio"));
+                registro.setIdOpcion(resultSet.getInt("idOpcion"));
+                registro.setIdUsuario(resultSet.getInt("idUsuario"));
+                registro.setIdEstado(resultSet.getInt("idEstado"));
+                registros.add(registro);
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        // Manejo de excepciones
+    }
+    return registros;
+}
+
+ 
+ //metodo para ordenar los registros de un usuario por tipo de pqrs
+public List<Registros> listarRegistrosUsuarioOrdenadosPorTipo(int idUsuario, String columnaOrdenamiento, String direccionOrden, String tipoPQRS) {
+    List<Registros> registros = new ArrayList<>();
+    try (Connection conexion = new Conexion().Conectar()) {
+        String sql = "SELECT * FROM Registros WHERE idUsuario = ?";
+
+        if (tipoPQRS != null) {
+            sql += " ORDER BY CASE WHEN idOpcion = ? THEN 0 ELSE 1 END, ";
+        }
+
+        sql += columnaOrdenamiento + " " + direccionOrden;
+
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setInt(1, idUsuario);
+
+            if (tipoPQRS != null) {
+                statement.setString(2, tipoPQRS);
+            }
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Registros registro = new Registros();
+                    registro.setIdRegistro(resultSet.getInt("id_Registros"));
+                    registro.setDescripcion(resultSet.getString("Descripcion"));
+                    registro.setPdf(resultSet.getString("Pdf"));
+                    registro.setFechaEnvio(resultSet.getDate("FechaEnvio"));
+                    registro.setIdOpcion(resultSet.getInt("idOpcion"));
+                    registro.setIdUsuario(resultSet.getInt("idUsuario"));
+                    registro.setIdEstado(resultSet.getInt("idEstado"));
+                    registros.add(registro);
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        // Manejo de excepciones
+    }
+    return registros;
+}
+
+
+ 
+// metodo para ordenar todos los registrose existentes
+ public List<Registros> listarRegistrosOrdenados(String columnaOrdenamiento, String direccionOrden) {
+    List<Registros> registros = new ArrayList<>();
+    try (Connection conexion = new Conexion().Conectar()) {
+        String sql = "SELECT * FROM Registros ORDER BY " + columnaOrdenamiento + " " + direccionOrden;
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+               Registros registro = new Registros();
+                  registro.setIdRegistro(resultSet.getInt("id_Registros"));
+                registro.setDescripcion(resultSet.getString("Descripcion"));
+                registro.setPdf(resultSet.getString("Pdf"));
+                registro.setFechaEnvio(resultSet.getDate("FechaEnvio"));
+                registro.setIdOpcion(resultSet.getInt("idOpcion"));
+                registro.setIdUsuario(resultSet.getInt("idUsuario"));
+                registro.setIdEstado(resultSet.getInt("idEstado"));
+                registros.add(registro);
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        // Manejo de excepciones
+    }
+    return registros;
+}
+ 
+ 
+ //metodo para ordenar todos los registros existentes por tipo de pqrs
+ public List<Registros> listarRegistrosOrdenadosPorTipo(String columnaOrdenamiento, String direccionOrden, String tipoPQRS) {
+    List<Registros> registros = new ArrayList<>();
+    try (Connection conexion = new Conexion().Conectar()) {
+        String sql = "SELECT * FROM Registros";
+
+        if (tipoPQRS != null) {
+            sql += " ORDER BY CASE WHEN idOpcion = ? THEN 0 ELSE 1 END, ";
+        }
+
+        sql += columnaOrdenamiento + " " + direccionOrden;
+
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+  
+
+            if (tipoPQRS != null) {
+                statement.setString(1, tipoPQRS);
+            }
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Registros registro = new Registros();
+                    registro.setIdRegistro(resultSet.getInt("id_Registros"));
+                    registro.setDescripcion(resultSet.getString("Descripcion"));
+                    registro.setPdf(resultSet.getString("Pdf"));
+                    registro.setFechaEnvio(resultSet.getDate("FechaEnvio"));
+                    registro.setIdOpcion(resultSet.getInt("idOpcion"));
+                    registro.setIdUsuario(resultSet.getInt("idUsuario"));
+                    registro.setIdEstado(resultSet.getInt("idEstado"));
+                    registros.add(registro);
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        // Manejo de excepciones
+    }
+    return registros;
+}
+
+ //metodo para listar las pqrs de un usuario
   public List<Registros> listarRegistrosUsuario(int idUsuario) {
     List<Registros> registros = new ArrayList<>();
     try (Connection conexion = new Conexion().Conectar()) {
@@ -333,6 +486,7 @@ return Cedula;
 }
   
 
+  // metodo con el cual apartir del idRegistro se obtiene el objeto registro
  public Registros RegistrosUsuario(int idRegistro) {
               Registros registro = new Registros();
     try (Connection conexion = new Conexion().Conectar()) {

@@ -13,6 +13,7 @@
     <%
         GestorRegistros gestorRegistro = new GestorRegistros();
         List<Registros> registro = gestorRegistro.listarTodosRegistros();
+        List<Registros> registroOrdenado = (List<Registros>) request.getAttribute("registros");
     %>
     <head>
         <link rel="stylesheet" href="templates/Style2.css">
@@ -64,11 +65,24 @@
         <table class="table table-dark table-borderless">
             <thead>
                 <tr>
-                    <th scope="col">Usuario</th>
+                    <th scope="col"><a href="SvOrdenarTodos?columna=idUsuario&direccion=<%= (request.getParameter("direccion") != null && request.getParameter("direccion").equals("desc")) ? "asc" : "desc" %>">Usuario</a></th>
                     <th scope="col">Correo</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Fecha envio</th>
-                    <th scope="col">Estados</th>
+                                    <th scope="col">
+                                
+                            <form action="SvOrdenarTodos" method="GET" id="selectForm">
+                                <select class="form-select" name="tipoPQRS" id="tipoPQRS" onchange="submitForm()"  >
+                                        <option hidden disabled selected value="">Ordenar </option>
+                                    <option value="1">Peticiones</option>
+                                    <option value="2">Quejas</option>
+                                    <option value="3">Reclamos</option>
+                                    <option value="4">Sugerencias</option>
+                                </select>
+                                <input type="hidden" name="direccion" value="asc">
+                                <input type="hidden" name="columna" value="idOpcion">
+                            </form>
+                        </th>
+                         <th scope="col"><a href="SvOrdenarTodos?columna=FechaEnvio&direccion=<%= (request.getParameter("direccion") != null && request.getParameter("direccion").equals("desc")) ? "asc" : "desc" %>">Fecha envio</a></th>
+                         <th scope="col"><a href="SvOrdenarTodos?columna=idEstado&direccion=<%= (request.getParameter("direccion") != null && request.getParameter("direccion").equals("desc")) ? "asc" : "desc" %>">Estado</a></th>
                      <th scope="col">Responder</th>
                     
                 </tr>
@@ -79,6 +93,32 @@
                             <td colspan="7" class="text-center">No hay registros</td>
                         </tr>
                         <% } else { %>
+                         <%if (registroOrdenado != null){%>            
+                <tr>
+                     <% // Iteramos sobre la lista de tutoriales y mostramos los detalles de cada tutorial en una tabla HTML
+                                for (Registros regis : registroOrdenado) {
+                            %> 
+                        <tr>
+                    <th><%=regis.getnombreUsuario()%></th>
+                    <td><%=regis.getCorreoUsuario()%></td>
+                    <td><%=regis.getNombreOpcion()%></td>
+                    <td><%=regis.getFechaEnvio()%></td>
+                    <td><%=regis.getEstado()%> </td>
+                   
+                    <td> <%if (regis.getIdEstado() == 1){%>
+                        <a href="SvCambioEstado?id=<%=regis.getIdRegistro()%> "class="btn btn-primary" <i class="fa-solid fa-eye"></i> Responder</a>
+                     <%}else{%>
+                        <a href="#" type= "button" class="btn btn-secondary disabled" ><i class="fa-solid fa-eye"></i> Responder</a>
+                    <%}%>
+                    </td>
+                    </tr>
+                   
+                    
+                        <% }%>
+                         
+                         
+                           <%}else{%>
+                         
                 <tr>
                      <% // Iteramos sobre la lista de tutoriales y mostramos los detalles de cada tutorial en una tabla HTML
                                 for (Registros regis : registro) {
@@ -100,10 +140,17 @@
                    
                     
                         <% }%>
+                          <% }%>
                            <% }%>
                     
                 </tr>
 
             </tbody>
         </table>
+                           
+<script>
+        function submitForm() {
+            document.getElementById("selectForm").submit();
+        }
+</script>
 </html>

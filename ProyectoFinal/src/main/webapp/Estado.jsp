@@ -17,7 +17,8 @@
         GestorRegistros gestor = new GestorRegistros();
         HttpSession se = request.getSession();
         int idUsuario = (int) se.getAttribute("userId");
-        List<Registros> registro = gestor.listarRegistrosUsuario(idUsuario);
+        List<Registros> registroOrdenado = (List<Registros>) request.getAttribute("registros");
+        List <Registros>registro = gestor.listarRegistrosUsuario(idUsuario);
     %>
 
     <head>
@@ -119,9 +120,26 @@
                     <thead>
                         <tr>
                             <th scope="col">Correo</th>
-                            <th scope="col">Peticion</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Fecha</th>
+                          
+                            <th scope="col">
+                                
+    <form action="SvOrdenar" method="GET" id="selectForm">
+        <select class="form-select" name="tipoPQRS" id="tipoPQRS" onchange="submitForm()"  >
+                <option hidden disabled selected value="">Ordenar </option>
+            <option value="1">Peticiones</option>
+            <option value="2">Quejas</option>
+            <option value="3">Reclamos</option>
+            <option value="4">Sugerencias</option>
+        </select>
+        <input type="hidden" name="direccion" value="asc">
+        <input type="hidden" name="columna" value="idOpcion">
+        <input type="hidden" name="id" value="<%=idUsuario%>">
+    </form>
+</th>
+
+                            
+                            <th scope="col"><a href="SvOrdenar?columna=idEstado&direccion=<%= (request.getParameter("direccion") != null && request.getParameter("direccion").equals("desc")) ? "asc" : "desc" %>&id=<%=idUsuario%>">Estado</a></th>
+                            <th scope="col"><a href="SvOrdenar?columna=FechaEnvio&direccion=<%= (request.getParameter("direccion") != null && request.getParameter("direccion").equals("desc")) ? "asc" : "desc" %>&id=<%=idUsuario%>">Fecha</a></th>
                             <th scope="col">Descripcion</th>
                             <th scope="col">Archivo</th>
                             <th scope="col">Opcion</th>
@@ -129,11 +147,15 @@
                     </thead>
                     <tbody>
                         <% if (registro.isEmpty()) { %>
+                        
+                        
                         <tr>
                             <td colspan="7" class="text-center">No se ha realizado registros</td>
                         </tr>
+                        
                         <% } else { %>
-                        <% for (Registros regis : registro) {%>
+                        <%if (registroOrdenado != null){%>
+                           <% for (Registros regis : registroOrdenado) {%>
                         <tr>
                             <td><%=regis.getCorreoUsuario()%></td>
                             <td><%=regis.getNombreOpcion()%></td>
@@ -162,6 +184,41 @@
                             </td>
                         </tr>
                         <% } %>
+                        
+                            <%}else{%>
+                            
+                                <% for (Registros regis : registro) {%>
+                        <tr>
+                            <td><%=regis.getCorreoUsuario()%></td>
+                            <td><%=regis.getNombreOpcion()%></td>
+                            <td><%=regis.getEstado()%></td>
+                            <td><%=regis.getFechaEnvio()%></td>
+                            <% if (regis.getDescripcion().isBlank()) { %>
+                            <td>Sin descripción</td>
+                            <% } else {%>
+                            <td><%=regis.getDescripcion()%></td>    
+                            <% } %>
+                            <% if (regis.getPdf().isBlank()) { %>
+                            <td>Sin documento</td>
+                            <% } else {%>
+                            <td><a href="pdf/<%= regis.getPdf() %>" target="_blank"><%= regis.getPdf() %></a></td>
+                            <% }%>
+                            <td style="white-space: nowrap;"> 
+                                <%if (regis.getIdEstado() == 1){%>
+                                <a href="#" type= "button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<%=regis.getIdRegistro()%>"><i class="fa-solid fa-eye"></i> Editar</a>
+                                <a href="#" type= "button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="<%=regis.getIdRegistro()%>"><i class="fa-solid fa-trash"></i> Eliminar</a>
+                                   <%}else {%>
+                                   
+                                   <a href="#" type= "button" class="btn btn-secondary disabled" ><i class="fa-solid fa-eye"></i> Editar</a>
+                                <a href="#" type= "button" class="btn btn-outline disabled" ><i class="fa-solid fa-trash"></i> Eliminar</a>
+                                   
+                                   <%}%>
+                            </td>
+                        </tr>
+                        <% } %>
+   <% }%>
+                        
+                    
                         <% }%>
                     </tbody>
                 </table>
@@ -216,6 +273,12 @@
                 </div>           
 
 
+                            
+                            <script>
+    function submitForm() {
+        document.getElementById("selectForm").submit();
+    }
+                            </script>
                 <script>
                     $('#eliminarTareaModal').on('show.bs.modal', function (event) {
                         var button = $(event.relatedTarget); // Botón que desencadenó el evento
@@ -229,7 +292,7 @@
                 <script>
                     function eliminarContacto() {
                         $('#eliminarForm').submit(); // Enviar el formulario al servlet
-                    }
+                    } 
                 </script>
 
                 <script>

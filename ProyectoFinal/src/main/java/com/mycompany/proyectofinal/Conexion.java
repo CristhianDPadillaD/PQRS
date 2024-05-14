@@ -44,7 +44,7 @@ public class Conexion {
             System.out.println("Error al conectar la base de datos: " + e.getMessage());
         }
         // Imprimir mensaje de conexión exitosa
-        System.out.println("¡Conexión exitosa!");
+   
         return cx;
     }
 
