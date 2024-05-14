@@ -29,6 +29,11 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+               <script src="script/script.js" type="text/javascript"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -87,8 +92,8 @@
                     <td><%=usuario.getRoll()%></td>
                     <td><%=usuario.getCedula()%></td>
                     <td> 
-                        <a href="SvCambiarRoll?id=<%= usuario.getIdUsuario()%>" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="" <i class="fa-solid fa-trash"></i> Cambiar roll </a>
-                       
+                        <a href="SvCambiarRoll?id=<%= usuario.getIdUsuario()%>" class="btn btn-outline-primary" data-bs-toggle="modal"  data-id="" <i class="fa-solid fa-trash"></i> Cambiar roll </a>
+                       <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarTareaModal" data-id="<%= usuario.getIdUsuario()%>" <i class="fa-solid fa-trash"></i> Eliminar usuario </a>
                     </td>
                     </tr>
                                           <% } %>
@@ -96,4 +101,45 @@
 
             </tbody>
         </table>
+                
+                
+                <div class="modal fade" id="eliminarTareaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="eliminarLabel"style="color: #000;">Eliminar Registro</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h4>¿Estás seguro de que deseas eliminar este registro?</h4>
+                                <p id="contactoNombre"></p>
+                                <form id="eliminarForm" action="SvEliminarUsuario" method="POST">
+                                    <input type="hidden" id="Identificador" name="inputEliminar">
+                                </form>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-danger" onclick="eliminarContacto()">Eliminar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                  <script>
+                    $('#eliminarTareaModal').on('show.bs.modal', function (event) {
+                        var button = $(event.relatedTarget); // Botón que desencadenó el evento
+                        var id = button.data('id'); // Obtén el nombre del contacto desde data-nombre
+
+                        // Establecer el valor del campo oculto con el nombre del contacto
+                        $('#Identificador').val(id);
+                    });
+                </script>   
+
+                <script>
+                    function eliminarContacto() {
+                        $('#eliminarForm').submit(); // Enviar el formulario al servlet
+                    }
+                </script>
+
 </html>

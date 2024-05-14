@@ -174,6 +174,56 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
     }
     return usuarios;
 }
+       
+       public void modificarUsuario(String nombre, String apellido, String cedula, String correo, String contraseña, int idUsuario) throws SQLException {
+    String query = "UPDATE usuario SET Nombre = ?, Apellido = ?, Cedula = ?, Correo = ?, Contraseña = ? WHERE idUsuario = ?";
+    
+    try (Connection connection = new Conexion().Conectar();
+         PreparedStatement statement = connection.prepareStatement(query)) {
+        // Establecer los parámetros en la consulta preparada
+        statement.setString(1, nombre);
+        statement.setString(2, apellido);
+        statement.setString(3, cedula);
+        statement.setString(4, correo);
+        statement.setString(5, contraseña);
+        statement.setInt(6, idUsuario);
+
+        // Ejecutar la consulta
+        int filasModificadas = statement.executeUpdate();
+        if (filasModificadas != 1) {
+            throw new SQLException("No se pudo modificar el registro con ID: " + idUsuario);
+        }
+    } catch (SQLException e) {
+        // Manejar la excepción
+        e.printStackTrace();
+        throw e; // Relanzar la excepción para que sea manejada por quien llame al método
+    }
+}
+       public Usuario obtenerUsuario(int idUsuario) {
+              Usuario usuario = new Usuario();
+    try (Connection conexion = new Conexion().Conectar()) {
+        String sql = "SELECT * FROM usuario WHERE idUsuario = ?";
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setInt(1, idUsuario);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+           
+                    usuario.setIdUsuario(resultSet.getInt("idUsuario"));
+                    usuario.setNombre(resultSet.getString("Nombre"));
+                    usuario.setApellido(resultSet.getString("Apellido"));
+                    usuario.setCedula(resultSet.getString("Cedula"));
+                    usuario.setCorreo(resultSet.getString("Correo"));
+                    usuario.setContraseña(resultSet.getString("Contraseña"));
+                    usuario.setIdroll(resultSet.getInt("idroll"));
+               
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error al listar los registros del usuario " + idUsuario + ": " + ex.getMessage());
+    }
+    return usuario;
+}
      
 }
 

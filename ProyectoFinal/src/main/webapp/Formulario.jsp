@@ -56,6 +56,10 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="templates/Style2.css" rel="stylesheet" />
+           <script src="script/script.js" type="text/javascript"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </head>
 
     <body id="page-top">
@@ -74,7 +78,7 @@
                         <p class="text-white-75 mb-5">Aquí puedes enviar tus Peticiones, Quejas, Reclamos y Sugerencias de forma rápida, obtener respuestas y soluciones eficientes, y ayudarnos a mejorar con tu feedback.</p>
                         <p class="text-white-75 mb-5">Tu opinión es importante. ¡Gracias por comunicarte con nosotros!</p
                         <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                                <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Cambiar Usuario</a>
+                                <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<%=id%>">Editar tu informacion</a>
                                 
                             </div>
                     </div>
@@ -161,6 +165,30 @@
                 </div>
             </div>
         </section>
+                                
+                                   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+                    <div class="modal-dialog"> 
+                        <div class="modal-content"> 
+                            <div class="modal-header"> 
+                                <h5 class="modal-title" id="exampleModalLabel"style="color: #000;">Detalles del usuario</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
+                            </div>
+                            <div class="modal-body"> 
+                                <form action="SvEditarUsuario" method="Post">
+                                    <div id="libro-details"> 
+                                        <!-- AquÃ­ se aÃ±ade los detalles del Tutorial-->
+                                    </div>
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
+                                <input type = "Submit" class="btn btn-primary" value = "Actualizar">
+                                </form>
+                            </div>
+                        </div> 
+                    </div> 
+                </div>   
+                                
+                                
         <!-- Footer-->
         <footer class="bg-light py-5">
             <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2023 - Company Name</div></div>
@@ -179,6 +207,31 @@
 
 
 
+   
+
+        
+                <script>
+                    // funcion para mostrar los datos en la ventana modal
+                    $('#exampleModal').on('show.bs.modal', function (event) {
+                        var button = $(event.relatedTarget); // BotÃ³n que desencadenÃ³ el evento
+                        var id = button.data('id'); // ObtÃ©n el nombre del perro
+
+                        // Realiza una solicitud AJAX al servlet para obtener los detalles del perro por su nombre
+                        $.ajax({
+                            url: 'SvEditarUsuario?id=' + id, // Cambia 'id' por el nombre del parÃ¡metro que esperas en tu servlet
+                            method: 'GET',
+                            success: function (data) {
+                                // Actualiza el contenido del modal con los detalles del perro
+                                $('#libro-details').html(data);
+                            },
+                            error: function () {
+                                // Maneja errores aquÃ­ si es necesario y se imprime en consola
+                                console.log('Error al cargar los detalles del registro.');
+                            }
+                        });
+                    });
+
+                </script>
 
         <script>
             // Variable de control para verificar si el formulario debe enviarse

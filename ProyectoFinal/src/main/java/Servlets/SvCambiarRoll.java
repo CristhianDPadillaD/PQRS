@@ -5,6 +5,7 @@
 package Servlets;
 
 import com.mycompany.proyectofinal.GestorUsuario;
+import com.mycompany.proyectofinal.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -28,14 +29,31 @@ public class SvCambiarRoll extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        int roll = 2;
-
-        try {
-            cambiarRoll.cambiarRoll(id, roll);
+       Usuario user =  cambiarRoll.obtenerUsuario(id);
+       
+       if (user.getIdroll() == 1){
+            int roll = 2;
+            try {
+                cambiarRoll.cambiarRoll(id, roll);
+                
             response.sendRedirect("Usuarios.jsp");
-        } catch (SQLException ex) {
-            Logger.getLogger(SvCambioEstado.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            } catch (SQLException ex) {
+                Logger.getLogger(SvCambiarRoll.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       }else {
+           int roll = 1; 
+            try {
+                cambiarRoll.cambiarRoll(id, roll);
+                
+            response.sendRedirect("Usuarios.jsp");
+            } catch (SQLException ex) {
+                Logger.getLogger(SvCambiarRoll.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       }
+       
+
+            
+       
 
     }
 

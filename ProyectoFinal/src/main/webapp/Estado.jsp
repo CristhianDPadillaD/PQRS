@@ -147,7 +147,8 @@
                             <% if (regis.getPdf().isBlank()) { %>
                             <td>Sin documento</td>
                             <% } else {%>
-                            <td><a href="<%=regis.getPdf()%>" target="_blank"><%=regis.getPdf()%> </a></td>
+                            <%@ page import="javax.servlet.ServletContext" %>
+                            <td><a href="pdf/<%= regis.getPdf() %>" target="_blank"><%= regis.getPdf() %></a></td>
                             
                             <% }%>
                             <td style="white-space: nowrap;"> 
@@ -198,7 +199,7 @@
                     <div class="modal-dialog"> 
                         <div class="modal-content"> 
                             <div class="modal-header"> 
-                                <h5 class="modal-title" id="exampleModalLabel"style="color: #000;">Detalles del tutorial</h5>
+                                <h5 class="modal-title" id="exampleModalLabel"style="color: #000;">Detalles del registro</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
                             </div>
                             <div class="modal-body"> 

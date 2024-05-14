@@ -6,10 +6,12 @@ com\mycompany\proyectofinal\Conexion.class
 com\mycompany\proyectofinal\GestorRegistros.class
 Servlets\SvAgregarRegistro.class
 Servlets\SvCambioEstado.class
+Servlets\SvEliminarUsuario.class
 com\mycompany\proyectofinal\GestorRegistros$1.class
 Servlets\SvAcceder.class
 com\mycompany\proyectofinal\Registros.class
 Servlets\SvEditarRegistro.class
+Servlets\SvEditarUsuario.class
 com\mycompany\proyectofinal\JakartaRestConfiguration.class
 com\mycompany\proyectofinal\Usuario.class
 Servlets\SvCambiarRoll.class

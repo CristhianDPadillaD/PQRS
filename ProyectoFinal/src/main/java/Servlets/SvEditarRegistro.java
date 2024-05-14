@@ -97,6 +97,7 @@ public class SvEditarRegistro extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
          int id = Integer.parseInt(request.getParameter("identificador"));
           int opciones= Integer.parseInt(request.getParameter("opciones"));
           String Descripcion = request.getParameter("descripcion");
