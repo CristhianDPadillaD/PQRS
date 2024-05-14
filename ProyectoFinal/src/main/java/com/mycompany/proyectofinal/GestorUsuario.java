@@ -97,7 +97,7 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
         // Las credenciales coinciden, usuario autenticado
         resultado[0] = resultSet.getString("Nombre"); // Obtener el nombre de usuario
         resultado[2] = resultSet.getString("Cedula"); // Obtener la cédula del usuario
-        resultado[3] = resultSet.getString("idUsuario");
+        resultado[3 ] = resultSet.getString("idUsuario");
         
         // Obtener el id del rol del usuario
         int idRol = resultSet.getInt("idroll");
@@ -174,8 +174,7 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
     }
     return usuarios;
 }
-       
-       public void modificarUsuario(String nombre, String apellido, String cedula, String correo, String contraseña, int idUsuario) throws SQLException {
+   public void modificarUsuario(String nombre, String apellido, String cedula, String correo, String contraseña, int idUsuario) throws SQLException {
     String query = "UPDATE usuario SET Nombre = ?, Apellido = ?, Cedula = ?, Correo = ?, Contraseña = ? WHERE idUsuario = ?";
     
     try (Connection connection = new Conexion().Conectar();
@@ -187,6 +186,31 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
         statement.setString(4, correo);
         statement.setString(5, contraseña);
         statement.setInt(6, idUsuario);
+
+        // Ejecutar la consulta
+        int filasModificadas = statement.executeUpdate();
+        if (filasModificadas != 1) {
+            throw new SQLException("No se pudo modificar el registro con ID: " + idUsuario);
+        }
+    } catch (SQLException e) {
+        // Manejar la excepción
+        e.printStackTrace();
+        throw e; // Relanzar la excepción para que sea manejada por quien llame al método
+    }
+}
+   
+   
+   
+   public void modificarParteUsuario(String nombre, String cedula, String correo, int idUsuario) throws SQLException {
+    String query = "UPDATE usuario SET Nombre = ?,  Cedula = ?, Correo = ? WHERE idUsuario = ?";
+    
+    try (Connection connection = new Conexion().Conectar();
+         PreparedStatement statement = connection.prepareStatement(query)) {
+        // Establecer los parámetros en la consulta preparada
+        statement.setString(1, nombre);
+        statement.setString(2, cedula);
+        statement.setString(3, correo);
+        statement.setInt(4, idUsuario);
 
         // Ejecutar la consulta
         int filasModificadas = statement.executeUpdate();

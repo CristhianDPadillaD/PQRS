@@ -6,6 +6,7 @@ package Servlets;
 
 import com.mycompany.proyectofinal.Conexion;
 import com.mycompany.proyectofinal.GestorRegistros;
+import com.mycompany.proyectofinal.GestorUsuario;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,6 +15,9 @@ import java.io.OutputStream;
 import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -51,12 +55,20 @@ public class SvAgregarRegistro extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
          ServletContext context = getServletContext();
+         GestorUsuario user = new GestorUsuario();
     // Obtener parámetros del formulario HTML
     String descripcion = request.getParameter("descripcion");
-     System.out.println(descripcion);
+    
      int idOpcion = Integer.parseInt(request.getParameter("opciones"));
-
+        String nombre = request.getParameter("nombre");
+        String correo = request.getParameter("correo");
+        String cedula = request.getParameter("cedula");
     int idUsuario = Integer.parseInt(request.getParameter("id"));
+        try {
+            user.modificarParteUsuario(nombre, cedula, correo, idUsuario);
+        } catch (SQLException ex) {
+            Logger.getLogger(SvAgregarRegistro.class.getName()).log(Level.SEVERE, null, ex);
+        }
     int idEstado = 1;
     
     // Obtener la fecha actual
@@ -74,7 +86,12 @@ public class SvAgregarRegistro extends HttpServlet {
     
         
       Part filePart = request.getPart("pdf");
-        String fileName = filePart.getSubmittedFileName();
+      String fileName = "";
+      
+      if(filePart != null && filePart.getSize() > 0){
+          
+      
+        fileName = filePart.getSubmittedFileName();
 
         // Get the file upload directory
       String uploadDir = context.getRealPath("/pdf");
@@ -93,9 +110,7 @@ public class SvAgregarRegistro extends HttpServlet {
       output.write(buffer, 0, length);
     }
   }
-    
-       out.println(uploadDir);
-         out.println(uploadFolder);
+}
         
     // Agregar el PQRS a la base de datos
     gestor.AgregarPQRS(descripcion, fileName, sqlDate, idOpcion, idUsuario, idEstado, conexion);

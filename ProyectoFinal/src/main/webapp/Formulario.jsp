@@ -3,6 +3,8 @@
     Created on : 1/05/2024, 8:48:09 p. m.
     Author     : ADMIN
 --%>
+<%@page import="com.mycompany.proyectofinal.GestorUsuario"%>
+<%@page import="com.mycompany.proyectofinal.Usuario"%>
 <%@include file= "templates/header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="javax.servlet.http.HttpSession"%>
@@ -10,14 +12,12 @@
 
 <%
     // Obtener el nombre de usuario y el rol de la sesión
-    String nombreUsuario = (String) session.getAttribute("usuario");
-    String correo = (String) session.getAttribute("correo");
-    String cedula = (String) session.getAttribute("cedula");
+    GestorUsuario x = new GestorUsuario();
     String id = (String) session.getAttribute("id");
     int userId = Integer.parseInt(id);
      HttpSession s = request.getSession();
     s.setAttribute("userId", userId);
-    
+    Usuario user = x.obtenerUsuario(userId);
 %>
 
 <!DOCTYPE html>
@@ -115,12 +115,11 @@
                      
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." required value="<%= nombreUsuario%>" />
+                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." name ="nombre" required value="<%= user.getNombre()%>" />
                                 <label for="name">Nombre Completo</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Complete este espacio.</div>
                             </div>
-
- <input type = "numb"hidden value="<%= id%>" name="id">
+                             <input type = "numb"hidden value="<%= id%>" name="id">
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="opcion" name="opciones" required>
                                    <option hidden disabled selected value="">Selecciona una opción</option>
@@ -134,14 +133,14 @@
                             </div>
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com" required value="<%=correo%>" />
+                                <input class="form-control" id="email" type="email" placeholder="name@example.com" name ="correo"required value="<%=user.getCorreo()%>" />
                                 <label for="email">Correo Electronico</label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                             </div>
                             <!-- Phone number input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" required  value="<%=cedula%>"/>
+                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" name ="cedula" required  value="<%=user.getCedula()%>"/>
                                 <label for="phone">Cedula</label>
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
                             </div>

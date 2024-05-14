@@ -147,9 +147,7 @@
                             <% if (regis.getPdf().isBlank()) { %>
                             <td>Sin documento</td>
                             <% } else {%>
-                            <%@ page import="javax.servlet.ServletContext" %>
                             <td><a href="pdf/<%= regis.getPdf() %>" target="_blank"><%= regis.getPdf() %></a></td>
-                            
                             <% }%>
                             <td style="white-space: nowrap;"> 
                                 <%if (regis.getIdEstado() == 1){%>
@@ -169,7 +167,7 @@
                 </table>
 
 
-
+                            <!------- Modal de eliminar ------>
                 <div class="modal fade" id="eliminarTareaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -210,7 +208,7 @@
                             </div> 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
-                                <input type = "Submit" value = "Actualizar">
+                                <input type = "Submit" class =" btn btn-primary" value = "Actualizar">
                                 </form>
                             </div>
                         </div> 
