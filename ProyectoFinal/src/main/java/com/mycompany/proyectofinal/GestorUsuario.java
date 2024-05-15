@@ -22,6 +22,8 @@ import java.util.List;
 public class GestorUsuario {
     Conexion con = new Conexion();
     
+    
+    //metodo para agregar un usuario
     public void AgregarUsuario(String nombre, String apellido, String cedula, String correo, String contrasenia, int idroll, Connection conectar){
             if (conectar != null) {
             try {
@@ -45,6 +47,7 @@ public class GestorUsuario {
         }   
     }
     
+    //metodo para agregar usuario
      public void eliminarUsuario(int idUsuario) {
         try (Connection conexion = new Conexion().Conectar()) {
             String sql = "DELETE FROM usuario WHERE idUsuario = ?";
@@ -62,6 +65,8 @@ public class GestorUsuario {
         }
     }
 
+     
+     //metodo para cambiar de roll un usuario
 public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
     String query = "UPDATE usuario SET idroll = ? WHERE idUsuario = ?";
     try (Connection connection = new Conexion().Conectar();
@@ -83,7 +88,7 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
 }
 
 
-    
+    //metodo para verficar el usuario al momento de hacer login
      public String[] loginUsuario(String correo, String contrasenia) throws SQLException {
     String[] resultado = new String[4]; // Array para almacenar el nombre de usuario, el rol y la cédula
     Connection conexion = con.Conectar();
@@ -121,6 +126,9 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
     // Si no se encontró ninguna coincidencia o las credenciales son incorrectas, el inicio de sesión falla
     return null;
 }
+     
+     
+     //metodo para buscar el roll segun el idRoll
       public String buscarRoll(int idRoll) throws SQLException {
     String roll = null;
 
@@ -150,7 +158,7 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
 
     return roll;
 }
-      
+      //metodo para listar todos los usuarios
        public List<Usuario> listarUsuarios() {
     List<Usuario> usuarios = new ArrayList<>();
     try (Connection conexion = new Conexion().Conectar()) {
@@ -174,6 +182,9 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
     }
     return usuarios;
 }
+       
+       
+       //metodo para modificar usuario
    public void modificarUsuario(String nombre, String apellido, String cedula, String correo, String contraseña, int idUsuario) throws SQLException {
     String query = "UPDATE usuario SET Nombre = ?, Apellido = ?, Cedula = ?, Correo = ?, Contraseña = ? WHERE idUsuario = ?";
     
@@ -200,7 +211,7 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
 }
    
    
-   
+   //metodo para modificar solo una parte del usuario (usado para la parte del formumario donde no esta completo)
    public void modificarParteUsuario(String nombre, String cedula, String correo, int idUsuario) throws SQLException {
     String query = "UPDATE usuario SET Nombre = ?,  Cedula = ?, Correo = ? WHERE idUsuario = ?";
     
@@ -223,6 +234,8 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
         throw e; // Relanzar la excepción para que sea manejada por quien llame al método
     }
 }
+   
+   //metodo para obtener el objeto usuario con el idUsuario
        public Usuario obtenerUsuario(int idUsuario) {
               Usuario usuario = new Usuario();
     try (Connection conexion = new Conexion().Conectar()) {
