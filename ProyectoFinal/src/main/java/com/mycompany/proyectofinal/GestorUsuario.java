@@ -22,7 +22,17 @@ import java.util.List;
 public class GestorUsuario {
     Conexion con = new Conexion();
     
-    
+     /**
+     * Método para agregar un usuario a la base de datos.
+     * 
+     * @param nombre Nombre del usuario.
+     * @param apellido Apellido del usuario.
+     * @param cedula Cédula del usuario.
+     * @param correo Correo electrónico del usuario.
+     * @param contrasenia Contraseña del usuario.
+     * @param idroll ID del rol del usuario.
+     * @param conectar Conexión a la base de datos.
+     */
     //metodo para agregar un usuario
     public void AgregarUsuario(String nombre, String apellido, String cedula, String correo, String contrasenia, int idroll, Connection conectar){
             if (conectar != null) {
@@ -47,6 +57,12 @@ public class GestorUsuario {
         }   
     }
     
+     /**
+     * Método para eliminar un usuario de la base de datos.
+     * 
+     * @param idUsuario ID del usuario a eliminar.
+     */
+    
     //metodo para agregar usuario
      public void eliminarUsuario(int idUsuario) {
         try (Connection conexion = new Conexion().Conectar()) {
@@ -65,6 +81,13 @@ public class GestorUsuario {
         }
     }
 
+     /**
+     * Método para cambiar el rol de un usuario en la base de datos.
+     * 
+     * @param idUsuario ID del usuario.
+     * @param idRoll ID del nuevo rol.
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     */
      
      //metodo para cambiar de roll un usuario
 public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
@@ -87,6 +110,14 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
     }
 }
 
+    /**
+     * Método para autenticar un usuario durante el proceso de inicio de sesión.
+     * 
+     * @param correo Correo electrónico del usuario.
+     * @param contrasenia Contraseña del usuario.
+     * @return Arreglo con información del usuario (nombre, rol, cédula y ID), o null si las credenciales son incorrectas.
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     */
 
     //metodo para verficar el usuario al momento de hacer login
      public String[] loginUsuario(String correo, String contrasenia) throws SQLException {
@@ -127,6 +158,13 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
     return null;
 }
      
+     /**
+     * Método para buscar el rol según el ID del rol.
+     * 
+     * @param idRoll ID del rol a buscar.
+     * @return Nombre del rol encontrado.
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     */
      
      //metodo para buscar el roll segun el idRoll
       public String buscarRoll(int idRoll) throws SQLException {
@@ -158,6 +196,13 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
 
     return roll;
 }
+      
+      /**
+     * Método para listar todos los usuarios de la base de datos.
+     * 
+     * @return Lista de usuarios.
+     */
+      
       //metodo para listar todos los usuarios
        public List<Usuario> listarUsuarios() {
     List<Usuario> usuarios = new ArrayList<>();
@@ -183,6 +228,17 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
     return usuarios;
 }
        
+     /**
+     * Método para modificar un usuario en la base de datos.
+     * 
+     * @param nombre Nuevo nombre del usuario.
+     * @param apellido Nuevo apellido del usuario.
+     * @param cedula Nueva cédula del usuario.
+     * @param correo Nuevo correo electrónico del usuario.
+     * @param contraseña Nueva contraseña del usuario.
+     * @param idUsuario ID del usuario a modificar.
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     */
        
        //metodo para modificar usuario
    public void modificarUsuario(String nombre, String apellido, String cedula, String correo, String contraseña, int idUsuario) throws SQLException {
@@ -210,6 +266,16 @@ public void cambiarRoll(int idUsuario, int idRoll) throws SQLException {
     }
 }
    
+   /**
+     * Método para modificar parte de la información de un usuario en la base de datos.
+     * Este método se utiliza para modificar solo algunos campos del usuario, por ejemplo, en un formulario donde no se completa toda la información.
+     * 
+     * @param nombre Nuevo nombre del usuario.
+     * @param cedula Nueva cédula del usuario.
+     * @param correo Nuevo correo electrónico del usuario.
+     * @param idUsuario ID del usuario a modificar.
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     */
    
    //metodo para modificar solo una parte del usuario (usado para la parte del formumario donde no esta completo)
    public void modificarParteUsuario(String nombre, String cedula, String correo, int idUsuario) throws SQLException {
