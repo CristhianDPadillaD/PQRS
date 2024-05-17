@@ -7,24 +7,34 @@ package Servlets;
 import com.mycompany.proyectofinal.GestorRegistros;
 import com.mycompany.proyectofinal.GestorUsuario;
 import com.mycompany.proyectofinal.Registros;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author ADMIN
  */
 @WebServlet(name = "SvEditarRegistro", urlPatterns = {"/SvEditarRegistro"})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+                 maxFileSize = 1024 * 1024 * 10,      // 10MB
+                 maxRequestSize = 1024 * 1024 * 50)  // 50MB
 public class SvEditarRegistro extends HttpServlet {
+    
 
     GestorRegistros gestor = new GestorRegistros();
     GestorUsuario usuariGestor = new GestorUsuario();
@@ -115,11 +125,11 @@ tutorialHtml += "</div>\n"
         String nombre = request.getParameter("nombre");
         String correo = request.getParameter("correo");
         String cedula = request.getParameter("cedula");
-        String nuevoPdf = request.getParameter("NewPdf");
+             Part filePart = request.getPart("NewPdf");
         String pdf = request.getParameter("pdf");
                  
                  
-          if(nuevoPdf.isBlank() && !pdf.isBlank()){
+          if(filePart ==null && !pdf.isBlank()){
               
               try {
                   
@@ -131,7 +141,40 @@ tutorialHtml += "</div>\n"
               }
           }else {
              try {
-                 gestor.modificarRegistro(Descripcion, nuevoPdf, opciones, id);
+                 
+                 
+                 
+   
+      String fileName = "";
+      
+      if(filePart != null && filePart.getSize() > 0){
+          
+      
+        fileName = filePart.getSubmittedFileName();
+
+        // Get the file upload directory
+      String uploadDir = request.getServletContext().getRealPath("/pdf");
+      //String pdfFilePath = uploadDir + File.separator + fileName;
+      File uploadFolder = new File(uploadDir);
+  if (!uploadFolder.exists()) {
+    uploadFolder.mkdir();
+  }
+  File destFile = new File(uploadFolder, fileName);
+
+  // Copy the uploaded file to the destination path
+  try (InputStream input = filePart.getInputStream(); OutputStream output = new FileOutputStream(destFile)) {
+    byte[] buffer = new byte[1024];
+    int length;
+    while ((length = input.read(buffer)) > 0) {
+      output.write(buffer, 0, length);
+    }
+  }
+}
+                 
+                 
+                 
+                 
+                 gestor.modificarRegistro(Descripcion, fileName, opciones, id);
                         usuariGestor.modificarParteUsuario(nombre, cedula, correo, idUser);
              } catch (SQLException ex) {
                  Logger.getLogger(SvEditarRegistro.class.getName()).log(Level.SEVERE, null, ex);

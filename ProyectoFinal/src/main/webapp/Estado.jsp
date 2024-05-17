@@ -39,7 +39,13 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
+      <style>
+            /* Estilos en línea para la tabla y las celdas de archivo */
+         
+            .file-cell {
+                max-width: 300px; /* Ajusta el ancho según tus necesidades */
+            }
+        </style>
 
 
         <script>
@@ -201,7 +207,7 @@
                             <% if (regis.getPdf().isBlank()) { %>
                             <td>Sin documento</td>
                             <% } else {%>
-                            <td><a href="pdf/<%= regis.getPdf() %>" target="_blank"><%= regis.getPdf() %></a></td>
+                            <td class="file-cell"><a href="pdf/<%= regis.getPdf() %>" target="_blank"><%= regis.getPdf() %></a></td>
                             <% }%>
                             <td style="white-space: nowrap;"> 
                                 <%if (regis.getIdEstado() == 1){%>
@@ -249,7 +255,7 @@
                 </div>
 
 
-
+                            <!-- EDITAR MODAL -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
                     <div class="modal-dialog"> 
                         <div class="modal-content"> 
@@ -258,9 +264,9 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
                             </div>
                             <div class="modal-body"> 
-                                <form action="SvEditarRegistro" method="Post">
+                                <form action="SvEditarRegistro" method="Post" enctype="multipart/form-data">
                                     <div id="libro-details"> 
-                                        <!-- AquÃ­ se aÃ±ade los detalles del Tutorial-->
+                                        <!-- form de editar-->
                                     </div>
                             </div> 
                             <div class="modal-footer">
